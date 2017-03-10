@@ -19,7 +19,6 @@ import com.quang.tracnghiemtoan.fragments.PracticeFragment;
 import com.quang.tracnghiemtoan.fragments.SchoolTestFragment;
 import com.quang.tracnghiemtoan.fragments.SolutionFragment;
 import com.quang.tracnghiemtoan.fragments.UploadFragment;
-import com.quang.tracnghiemtoan.fragments.VideoFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -52,48 +51,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_chat_room) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        }
-        if (id == R.id.nav_contest_online) {
+        } else if (id == R.id.nav_contest_online) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new ContestOnlineFragment());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        }
-        if (id == R.id.nav_news) {
+        } else if (id == R.id.nav_news) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new NewsFragment());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        }
-        if (id == R.id.nav_practice) {
+        } else if (id == R.id.nav_practice) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new PracticeFragment());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        }
-        if (id == R.id.nav_school_test) {
+        } else if (id == R.id.nav_school_test) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new SchoolTestFragment());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        }
-        if (id == R.id.nav_solution) {
+        } else if (id == R.id.nav_solution) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new SolutionFragment());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        }
-        if (id == R.id.nav_upload) {
+        } else if (id == R.id.nav_upload) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new UploadFragment());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        }
-        if (id == R.id.nav_video) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.layout_content, new VideoFragment());
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+        } else if (id == R.id.nav_video) {
+            startActivity(new Intent(MainActivity.this, VideoActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

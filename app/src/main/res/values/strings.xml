@@ -24,4 +24,14 @@
 -	Cấm cản trở trái pháp luật, gây rối, phá hoại hệ thống máy chủ; Cản trở việc truy cập thông tin và sử
         dụng các dịch vụ hợp pháp.</string>
     <string name="please_wait">Vui lòng đợi…</string>
+    <string name="search_input_key_word">Nhập từ khóa</string>
+    <string name="json_youtube_items">items</string>
+    <string name="json_youtube_snippet">snippet</string>
+    <string name="json_youtube_title">title</string>
+    <string name="json_youtube_description">description</string>
+    <string name="json_youtube_thumbnails">thumbnails</string>
+    <string name="json_youtube_medium">medium</string>
+    <string name="json_youtbe_url">url</string>
+    <string name="json_youtube_resourceId">resourceId</string>
+    <string name="json_youtube_videoId">videoId</string>
 </resources>

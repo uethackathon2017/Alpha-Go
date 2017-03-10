@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:draggable_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.quang.tracnghiemtoan.acivities.VideoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewVideoTutorial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <com.github.pedrovgs.DraggableView
+        android:id="@+id/draggable_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        draggable_view:bottom_view_id="@+id/second_view"
+        draggable_view:enable_horizontal_alpha_effect="false"
+        draggable_view:top_fragment_height="@dimen/top_fragment_height"
+        draggable_view:top_fragment_margin_bottom="@dimen/top_fragment_margin"
+        draggable_view:top_fragment_margin_right="@dimen/top_fragment_margin"
+        draggable_view:top_view_id="@+id/player"
+        draggable_view:top_view_resize="false"
+        draggable_view:x_scale_factor="@dimen/x_scale_factor"
+        draggable_view:y_scale_factor="@dimen/y_scale_factor">
+
+        <ScrollView
+            android:id="@+id/second_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f4f4f4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/app_name"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <include layout="@layout/layout_content_video" />
+            </LinearLayout>
+        </ScrollView>
+
+        <fragment
+            android:id="@+id/player"
+            android:name="com.quang.tracnghiemtoan.fragments.VideoFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000" />
+    </com.github.pedrovgs.DraggableView>
+</FrameLayout>
