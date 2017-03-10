@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "501826454659",
+    "firebase_url": "https://vietnamchat.firebaseio.com",
+    "project_id": "project-3098201414807222073",
+    "storage_bucket": "project-3098201414807222073.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501826454659:android:efdfc1871ac6a138",
+        "android_client_info": {
+          "package_name": "com.quang.tracnghiemtoan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501826454659-7iq8d7100ebc8fi18j325mpuqa6tubci.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quang.tracnghiemtoan",
+            "certificate_hash": "2815076ea857c66bec91d7eb4da281ed259a7d81"
+          }
+        },
+        {
+          "client_id": "501826454659-lagut9o30gquobmr1jin4p3svkfe4grr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm5wW4YHhiaZNNh0E6ga4A9yQM-VFcW58"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501826454659-lagut9o30gquobmr1jin4p3svkfe4grr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

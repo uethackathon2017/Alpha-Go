@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_practice"
+            android:icon="@drawable/home"
+            android:title="Luyện tập" />
+        <item
+            android:id="@+id/nav_chat_room"
+            android:icon="@drawable/home"
+            android:title="Phòng chat" />
+        <item
+            android:id="@+id/nav_contest_online"
+            android:icon="@drawable/home"
+            android:title="Thi Online" />
+        <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/home"
+            android:title="Tin tức" />
+        <item
+            android:id="@+id/nav_school_test"
+            android:icon="@drawable/home"
+            android:title="Đề thi các trường" />
+        <item
+            android:id="@+id/nav_solution"
+            android:icon="@drawable/home"
+            android:title="Bài tập có giải" />
+        <item
+            android:id="@+id/nav_video"
+            android:icon="@drawable/home"
+            android:title="Video hướng dẫn" />
+        <item
+            android:id="@+id/nav_upload"
+            android:icon="@drawable/home"
+            android:title="Upload đề thi" />
+    </group>
+
+    <item android:title="Khác">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/home"
+                android:title="Chia sẻ" />
+        </menu>
+    </item>
+
+</menu>

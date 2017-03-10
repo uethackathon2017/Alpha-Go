@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Trắc nghiệm Toán</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="facebook_app_id">1839789499641746</string>
+    <string name="fb_login_protocol_scheme">1839789499641746</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_user_online">Thành viên trực tuyến</string>
+    <string name="chat_write_message">Viết tin nhắn</string>
+    <string name="rules">CẢM ƠN BẠN ĐÃ SỬ DỤNG ỨNG DỤNG TRẮC NGHIỆM MÔN TOÁN!\n\n
+        MỘT SỐ QUY ĐỊNH TRONG PHÒNG CHAT:\n\n
+        - Đây là nơi các bạn có thể giao lưu kết bạn, chia sẻ với nhau, báo các bài bị lỗi.\n
+        -	Cấm tuyên truyền, kích động bạo lực, dâm ô, đồi trụy, tội ác, tệ nạn xã hội,
+        mê tín dị đoan, phá hoại thuần phong, mỹ tục của dân tộc.\n
+-	Cấm đăng tải các nội dung chống phá Nhà nước, phá hoại khối đại đoàn kết toàn dân; tuyên truyền chiến
+        tranh xâm lược, khủng bố; gây hận thù, mâu thuẫn giữa các dân tộc, sắc tộc, chủng tộc, tôn giáo.\n
+-	Cấm quảng cáo, tuyên truyền, mua bán hàng hoá, dịch vụ bị cấm hoặc truyền bá tác phẩm báo chí, văn học,
+        nghệ thuật, xuất bản phẩm bị cấm.\n
+-	Cấm đưa thông tin xuyên tạc, vu khống, nhạo báng, xúc phạm uy tín tới tổ chức, cá nhân dưới bất kỳ hình
+        thức nào (nhạo báng, chê bai, kỳ thị tôn giáo, giới tính, sắc tộc….).\n
+-	Cấm tổ chức các hình thức cá cược, cờ bạc hoặc các thỏa thuận liên quan đến tiền, hiện kim, hiện vật.\n
+-	Cấm cản trở trái pháp luật, gây rối, phá hoại hệ thống máy chủ; Cản trở việc truy cập thông tin và sử
+        dụng các dịch vụ hợp pháp.</string>
+    <string name="please_wait">Vui lòng đợi…</string>
+</resources>
