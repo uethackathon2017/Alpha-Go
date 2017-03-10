@@ -1,6 +1,7 @@
 package com.quang.tracnghiemtoan.fragments;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ public class SchoolTestFragment extends Fragment {
     private SchoolTestAdapter adapter;
     private ArrayList<SchoolTest> listSchoolTest;
     private View v;
+    private ProgressDialog progressDialog;
 
     public SchoolTestFragment() {
         // Required empty public constructor
@@ -48,6 +50,9 @@ public class SchoolTestFragment extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_school_test, container, false);
         rvSchoolTest = (RecyclerView) v.findViewById(R.id.recyclerViewSchoolTest);
+        progressDialog = new ProgressDialog(v.getContext());
+        progressDialog.setMessage("Vui lòng đợi...");
+        progressDialog.show();
         listSchoolTest = new ArrayList<>();
         adapter = new SchoolTestAdapter(listSchoolTest);
         LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext());
@@ -105,6 +110,7 @@ public class SchoolTestFragment extends Fragment {
                     listSchoolTest.add(new SchoolTest(title, linkTest, dateTest, linkImage));
                 }
                 adapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

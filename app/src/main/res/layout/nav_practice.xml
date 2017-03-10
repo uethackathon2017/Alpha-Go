@@ -8,15 +8,13 @@
         android:id="@+id/recyclerViewReply"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/recyclerViewAnswer" />
+        android:layout_toLeftOf="@+id/recyclerViewRightAnswer" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewAnswer"
+        android:id="@+id/recyclerViewRightAnswer"
         android:layout_width="50dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:background="@color/blue"
         android:visibility="gone" />
-
-
 </RelativeLayout>

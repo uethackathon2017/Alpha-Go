@@ -27,7 +27,8 @@
         </activity>
         <activity
             android:name=".acivities.ChatRoomActivity"
-            android:label="Phòng Chat" />
+            android:label="Phòng Chat"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".acivities.LoginActivity" />
         <activity
             android:name="com.facebook.CustomTabActivity"
@@ -47,7 +48,9 @@
         <activity
             android:name=".acivities.PracticeActivity"
             android:label="Luyện tập" />
-        <activity android:name=".acivities.ViewSchoolTestActivity"></activity>
+        <activity
+            android:name=".acivities.ViewSchoolTestActivity"
+            android:label="Đề thi" />
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.quang.tracnghiemtoan.R;
-import com.quang.tracnghiemtoan.adapters.PracticeAnswerAdapter;
+import com.quang.tracnghiemtoan.adapters.PracticeRightAnswerAdapter;
 import com.quang.tracnghiemtoan.adapters.PracticeReplyAdapter;
 import com.quang.tracnghiemtoan.constants.Constant;
 import com.quang.tracnghiemtoan.controllers.SQLiteDataController;
@@ -36,7 +36,7 @@ public class PracticeActivity extends AppCompatActivity {
     private RecyclerView rvAnswerReply;
     private RecyclerView rvAnswer;
     private PracticeReplyAdapter replyAdapter;
-    private PracticeAnswerAdapter answerAdapter;
+    private PracticeRightAnswerAdapter rightAnswerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,16 +69,16 @@ public class PracticeActivity extends AppCompatActivity {
         rvAnswerReply.setHasFixedSize(true);
         rvAnswerReply.setLayoutManager(manager);
         rvAnswerReply.setItemAnimator(new DefaultItemAnimator());
-        replyAdapter = new PracticeReplyAdapter(PracticeActivity.this, problems);
+        replyAdapter = new PracticeReplyAdapter(problems);
         rvAnswerReply.setAdapter(replyAdapter);
 
         RecyclerView.LayoutManager manager2 = new LinearLayoutManager(PracticeActivity.this);
-        rvAnswer = (RecyclerView) navigationView.getHeaderView(0).findViewById(R.id.recyclerViewAnswer);
+        rvAnswer = (RecyclerView) navigationView.getHeaderView(0).findViewById(R.id.recyclerViewRightAnswer);
         rvAnswer.setHasFixedSize(true);
         rvAnswer.setLayoutManager(manager2);
         rvAnswer.setItemAnimator(new DefaultItemAnimator());
-        answerAdapter = new PracticeAnswerAdapter(PracticeActivity.this, problems);
-        rvAnswer.setAdapter(answerAdapter);
+        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+        rvAnswer.setAdapter(rightAnswerAdapter);
 
         btnAnswer = (Button) findViewById(R.id.button_dapan);
         btnAnswer.setOnClickListener(new View.OnClickListener() {
@@ -95,9 +95,9 @@ public class PracticeActivity extends AppCompatActivity {
                 switch (String.valueOf(spnPractice.getSelectedItem().toString())) {
                     case "Bấm Để Chọn Nội Dung":
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_PHUONGPHAP);
-                        replyAdapter = new PracticeReplyAdapter(PracticeActivity.this, problems);
-                        answerAdapter = new PracticeAnswerAdapter(PracticeActivity.this, problems);
-                        rvAnswer.setAdapter(answerAdapter);
+                        replyAdapter = new PracticeReplyAdapter(problems);
+                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+                        rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.GONE);
                         rvAnswer.setVisibility(View.GONE);
@@ -105,9 +105,9 @@ public class PracticeActivity extends AppCompatActivity {
                         break;
                     case "Hàm Số":
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_HAMSO);
-                        replyAdapter = new PracticeReplyAdapter(PracticeActivity.this, problems);
-                        answerAdapter = new PracticeAnswerAdapter(PracticeActivity.this, problems);
-                        rvAnswer.setAdapter(answerAdapter);
+                        replyAdapter = new PracticeReplyAdapter(problems);
+                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+                        rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
@@ -115,9 +115,9 @@ public class PracticeActivity extends AppCompatActivity {
                         break;
                     case "Hình Học Không Gian":
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_HINHHOCKG);
-                        replyAdapter = new PracticeReplyAdapter(PracticeActivity.this, problems);
-                        answerAdapter = new PracticeAnswerAdapter(PracticeActivity.this, problems);
-                        rvAnswer.setAdapter(answerAdapter);
+                        replyAdapter = new PracticeReplyAdapter(problems);
+                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+                        rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
@@ -125,9 +125,9 @@ public class PracticeActivity extends AppCompatActivity {
                         break;
                     case "Mặt Tròn Xoay":
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_MATTRONXOAY);
-                        replyAdapter = new PracticeReplyAdapter(PracticeActivity.this, problems);
-                        answerAdapter = new PracticeAnswerAdapter(PracticeActivity.this, problems);
-                        rvAnswer.setAdapter(answerAdapter);
+                        replyAdapter = new PracticeReplyAdapter(problems);
+                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+                        rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
@@ -135,9 +135,9 @@ public class PracticeActivity extends AppCompatActivity {
                         break;
                     case "Hàm Mũ Logarit":
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_MULOGARIT);
-                        replyAdapter = new PracticeReplyAdapter(PracticeActivity.this, problems);
-                        answerAdapter = new PracticeAnswerAdapter(PracticeActivity.this, problems);
-                        rvAnswer.setAdapter(answerAdapter);
+                        replyAdapter = new PracticeReplyAdapter(problems);
+                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+                        rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
@@ -145,9 +145,9 @@ public class PracticeActivity extends AppCompatActivity {
                         break;
                     case "Số Phức":
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_SOPHUC);
-                        replyAdapter = new PracticeReplyAdapter(PracticeActivity.this, problems);
-                        answerAdapter = new PracticeAnswerAdapter(PracticeActivity.this, problems);
-                        rvAnswer.setAdapter(answerAdapter);
+                        replyAdapter = new PracticeReplyAdapter(problems);
+                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+                        rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
@@ -155,9 +155,9 @@ public class PracticeActivity extends AppCompatActivity {
                         break;
                     case "Tích Phân":
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_TICHPHAN);
-                        replyAdapter = new PracticeReplyAdapter(PracticeActivity.this, problems);
-                        answerAdapter = new PracticeAnswerAdapter(PracticeActivity.this, problems);
-                        rvAnswer.setAdapter(answerAdapter);
+                        replyAdapter = new PracticeReplyAdapter(problems);
+                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+                        rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
@@ -165,9 +165,9 @@ public class PracticeActivity extends AppCompatActivity {
                         break;
                     case "Các Phương Pháp Giải Nhanh":
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_PHUONGPHAP);
-                        replyAdapter = new PracticeReplyAdapter(PracticeActivity.this, problems);
-                        answerAdapter = new PracticeAnswerAdapter(PracticeActivity.this, problems);
-                        rvAnswer.setAdapter(answerAdapter);
+                        replyAdapter = new PracticeReplyAdapter(problems);
+                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+                        rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);

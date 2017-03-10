@@ -58,6 +58,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     @Override
+    public int getItemViewType(int position) {
+        assert user != null;
+        if (user.getUid().equals(listMessages.get(position).getFirebaseId())) {
+            return 0;
+        } else
+            return 1;
+    }
+
+    @Override
     public int getItemCount() {
         return listMessages.size();
     }

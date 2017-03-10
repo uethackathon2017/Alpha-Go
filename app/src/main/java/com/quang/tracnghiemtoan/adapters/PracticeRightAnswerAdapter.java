@@ -1,6 +1,5 @@
 package com.quang.tracnghiemtoan.adapters;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +15,11 @@ import java.util.ArrayList;
  * Created by PhungVanQuang on 3/10/2017.
  */
 
-public class PracticeAnswerAdapter extends RecyclerView.Adapter<PracticeAnswerAdapter.ViewHolder> {
+public class PracticeRightAnswerAdapter extends RecyclerView.Adapter<PracticeRightAnswerAdapter.ViewHolder> {
 
-    private Activity activity;
     private ArrayList<Problem> listAnswer;
 
-    public PracticeAnswerAdapter(Activity activity, ArrayList<Problem> listAnswer) {
-        this.activity = activity;
+    public PracticeRightAnswerAdapter(ArrayList<Problem> listAnswer) {
         this.listAnswer = listAnswer;
 
     }

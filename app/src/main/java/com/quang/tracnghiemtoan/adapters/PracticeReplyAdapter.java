@@ -1,6 +1,5 @@
 package com.quang.tracnghiemtoan.adapters;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,24 +19,75 @@ import java.util.ArrayList;
 
 public class PracticeReplyAdapter extends RecyclerView.Adapter<PracticeReplyAdapter.ViewHolder> {
 
-    private Activity activity;
     private ArrayList<Problem> listReplyAnswer;
+    private View v;
 
-    public PracticeReplyAdapter(Activity activity, ArrayList<Problem> listReplyAnswer) {
-        this.activity = activity;
+    public PracticeReplyAdapter(ArrayList<Problem> listReplyAnswer) {
         this.listReplyAnswer = listReplyAnswer;
 
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.practice_reply_item, parent, false);
-        return new ViewHolder(view);
+        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.practice_reply_item, parent, false);
+        return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.title.setText("Câu " + (position + 1) + ":");
+        holder.answerA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.answerA.getText().equals(listReplyAnswer.get(position).getRightAnswer())) {
+                    holder.answerA.setTextColor(view.getResources().getColor(R.color.red));
+                } else {
+                    holder.answerC.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerB.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerA.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerD.setTextColor(v.getResources().getColor(R.color.black));
+                }
+            }
+        });
+        holder.answerB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.answerB.getText().equals(listReplyAnswer.get(position).getRightAnswer())) {
+                    holder.answerB.setTextColor(v.getResources().getColor(R.color.darkred));
+                } else {
+                    holder.answerC.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerB.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerA.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerD.setTextColor(v.getResources().getColor(R.color.black));
+                }
+            }
+        });
+        holder.answerC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.answerC.getText().equals(listReplyAnswer.get(position).getRightAnswer())) {
+                    holder.answerC.setTextColor(v.getResources().getColor(R.color.darkred));
+                } else {
+                    holder.answerC.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerB.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerA.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerD.setTextColor(v.getResources().getColor(R.color.black));
+                }
+            }
+        });
+        holder.answerD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.answerD.getText().equals(listReplyAnswer.get(position).getRightAnswer())) {
+                    holder.answerD.setTextColor(v.getResources().getColor(R.color.darkred));
+                } else {
+                    holder.answerC.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerB.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerA.setTextColor(v.getResources().getColor(R.color.black));
+                    holder.answerD.setTextColor(v.getResources().getColor(R.color.black));
+                }
+            }
+        });
     }
 
     @Override
