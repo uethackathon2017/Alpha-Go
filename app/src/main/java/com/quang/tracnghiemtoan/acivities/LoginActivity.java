@@ -45,9 +45,9 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                     startActivity(new Intent(LoginActivity.this, ChatRoomActivity.class));
                 } else {
-                    Toast.makeText(LoginActivity.this, "Vui lòng đăng nhập.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Vui lòng đăng nhập", Toast.LENGTH_LONG).show();
                 }
-                //OK
+                // ...
             }
         };
 
