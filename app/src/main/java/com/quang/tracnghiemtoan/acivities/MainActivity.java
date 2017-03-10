@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_video) {
-            startActivity(new Intent(MainActivity.this, VideoActivity.class));
+            startActivity(new Intent(MainActivity.this, VideoTutorialActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

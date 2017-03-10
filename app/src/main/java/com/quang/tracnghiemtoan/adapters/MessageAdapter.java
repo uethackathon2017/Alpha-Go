@@ -64,7 +64,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvUsername, tvTimeSend, tvMessage;
-        ImageView imvAvatar, imvGift;
+        ImageView imvAvatar;
 
         public ViewHolder(View itemView) {
             super(itemView);

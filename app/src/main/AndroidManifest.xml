@@ -42,11 +42,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".acivities.VideoActivity"
+            android:name=".acivities.VideoTutorialActivity"
             android:label="Video bài giảng" />
         <activity
             android:name=".acivities.PracticeActivity"
             android:label="Luyện tập" />
+        <activity android:name=".acivities.ViewSchoolTestActivity"></activity>
     </application>
 
 </manifest>

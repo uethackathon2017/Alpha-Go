@@ -40,7 +40,7 @@ dependencies {
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'com.facebook.android:facebook-android-sdk:4.20.0'
     compile 'com.github.pedrovgs:draggablepanel:1.9'
-    compile 'es.voghdev.pdfviewpager:library:1.0.1'
+    compile 'com.github.barteksc:android-pdf-viewer:2.4.0'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

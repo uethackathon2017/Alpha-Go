@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class VideoActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class VideoTutorialActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private ArrayList<VideoTutorial> listVideoTutorial;
     private VideoTutorialAdapter adapter;
@@ -95,7 +94,7 @@ public class VideoActivity extends AppCompatActivity implements SearchView.OnQue
         videoFragment = (VideoFragment) getFragmentManager().findFragmentById(R.id.player);
         tvTitle = (TextView) findViewById(R.id.textViewTitle);
         tvDescription = (TextView) findViewById(R.id.textViewDescription);
-        progressDialog = new ProgressDialog(VideoActivity.this);
+        progressDialog = new ProgressDialog(VideoTutorialActivity.this);
         progressDialog.setMessage(getString(R.string.please_wait));
         progressDialog.show();
     }
@@ -205,16 +204,5 @@ public class VideoActivity extends AppCompatActivity implements SearchView.OnQue
     protected void onStop() {
         super.onStop();
         if (progressDialog.isShowing()) progressDialog.dismiss();
-    }
-
-    private String convertBase64ToString(String base64Code) {
-        String result = null;
-        byte[] json = Base64.decode(base64Code, Base64.DEFAULT);
-        try {
-            result = new String(json, "utf-8");
-        } catch (Exception ignored) {
-            result = "";
-        }
-        return result;
     }
 }
