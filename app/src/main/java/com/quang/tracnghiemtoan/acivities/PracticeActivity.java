@@ -110,6 +110,7 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setAdapter(answerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
+                        rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
                     case "Hình Học Không Gian":
@@ -119,6 +120,7 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setAdapter(answerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
+                        rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
                     case "Mặt Tròn Xoay":
@@ -128,6 +130,7 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setAdapter(answerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
+                        rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
                     case "Hàm Mũ Logarit":
@@ -137,6 +140,7 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setAdapter(answerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
+                        rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
                     case "Số Phức":
@@ -146,6 +150,7 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setAdapter(answerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
+                        rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
                     case "Tích Phân":
@@ -155,6 +160,7 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setAdapter(answerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
+                        rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
                     case "Các Phương Pháp Giải Nhanh":
@@ -164,6 +170,7 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setAdapter(answerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
                         btnAnswer.setVisibility(View.VISIBLE);
+                        rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
                 }
