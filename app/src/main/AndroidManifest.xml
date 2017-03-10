@@ -51,6 +51,9 @@
         <activity
             android:name=".acivities.ViewSchoolTestActivity"
             android:label="Đề thi" />
+        <activity
+            android:name=".acivities.SolutionActivity"
+            android:label="Làm đề thi" />
     </application>
 
 </manifest>

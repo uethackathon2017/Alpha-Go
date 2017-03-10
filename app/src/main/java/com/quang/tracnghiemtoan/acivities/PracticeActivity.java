@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -45,7 +46,7 @@ public class PracticeActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -85,6 +86,7 @@ public class PracticeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 rvAnswer.setVisibility(View.VISIBLE);
+                drawer.openDrawer(Gravity.LEFT);
             }
         });
 
@@ -94,14 +96,14 @@ public class PracticeActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (String.valueOf(spnPractice.getSelectedItem().toString())) {
                     case "Bấm Để Chọn Nội Dung":
-                        problems = sqLiteDataController.getAllProblem(Constant.KIND_PHUONGPHAP);
-                        replyAdapter = new PracticeReplyAdapter(problems);
-                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
-                        rvAnswer.setAdapter(rightAnswerAdapter);
-                        rvAnswerReply.setAdapter(replyAdapter);
-                        btnAnswer.setVisibility(View.GONE);
-                        rvAnswer.setVisibility(View.GONE);
-                        mathJaxWebView.setText(changeToString(problems));
+//                        problems = sqLiteDataController.getAllProblem(Constant.KIND_PHUONGPHAP);
+//                        replyAdapter = new PracticeReplyAdapter(problems);
+//                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+//                        rvAnswer.setAdapter(rightAnswerAdapter);
+//                        rvAnswerReply.setAdapter(replyAdapter);
+//                        btnAnswer.setVisibility(View.GONE);
+//                        rvAnswer.setVisibility(View.GONE);
+//                        mathJaxWebView.setText(changeToString(problems));
                         break;
                     case "Hàm Số":
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_HAMSO);

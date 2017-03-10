@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.util.Log;
 
+import com.quang.tracnghiemtoan.constants.Constant;
 import com.quang.tracnghiemtoan.models.Problem;
 
 import java.io.File;
@@ -19,8 +20,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class SQLiteDataController extends SQLiteOpenHelper {
-    private static final String DB_PATH="/data/data/com.quang.tracnghiemtoan/databases/";
-    private static final String DB_NAME= "data.sqlite";
+    private static final String DB_PATH = "/data/data/com.quang.tracnghiemtoan/databases/";
+    private static final String DB_NAME = "data.sqlite";
     private SQLiteDatabase database;
     private final Context context;
 
@@ -29,13 +30,13 @@ public class SQLiteDataController extends SQLiteOpenHelper {
         this.context = context;
     }
 
-    public void createDataBase() throws IOException{
+    public void createDataBase() throws IOException {
 
         boolean dbExist = checkDataBase();
 
-        if(dbExist){
+        if (dbExist) {
             //do nothing - database already exist
-        }else{
+        } else {
 
             //By calling this method and empty database will be created into the default system path
             //of your application so we are gonna be able to overwrite that database with our database.
@@ -119,6 +120,34 @@ public class SQLiteDataController extends SQLiteOpenHelper {
             close();
         }
         return listProblem;
+    }
+
+    public ArrayList<ArrayList<Problem>> getAllExam() {
+        ArrayList<Problem> listProblem = new ArrayList<>();
+        ArrayList<ArrayList<Problem>> listExam = new ArrayList<>();
+        try {
+            openDataBase();
+            String[] columns = new String[]{"iD", "dera", "giai", "dokho", "dapan"};
+            Cursor cursor = this.database.query(Constant.KIND_LUYENDE, columns, null, null, null, null, null);
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(0);
+                String question = cursor.getString(1);
+                String answer = cursor.getString(2);
+                String level = cursor.getString(3);
+                String rightAnswer = cursor.getString(4);
+                if (!answer.equals(".") && !answer.equals("..") && listProblem.size() != 0) {
+                    listExam.add(listProblem);
+                    listProblem = new ArrayList<>();
+                }
+                listProblem.add(new Problem(id, question, answer, level, rightAnswer));
+            }
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return listExam;
     }
 
     public boolean insertProblem(String kind, Problem problem) {

@@ -16,7 +16,6 @@ import com.quang.tracnghiemtoan.R;
 import com.quang.tracnghiemtoan.fragments.ContestOnlineFragment;
 import com.quang.tracnghiemtoan.fragments.NewsFragment;
 import com.quang.tracnghiemtoan.fragments.SchoolTestFragment;
-import com.quang.tracnghiemtoan.fragments.SolutionFragment;
 import com.quang.tracnghiemtoan.fragments.UploadFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -68,10 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_solution) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.layout_content, new SolutionFragment());
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            startActivity(new Intent(MainActivity.this, SolutionActivity.class));
         } else if (id == R.id.nav_upload) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new UploadFragment());
