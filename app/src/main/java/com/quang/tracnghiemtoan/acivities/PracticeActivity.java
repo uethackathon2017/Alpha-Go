@@ -51,7 +51,7 @@ public class PracticeActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_practice);
 
         sqLiteDataController = new SQLiteDataController(PracticeActivity.this);
         mathJaxWebView = (MathJaxWebView) findViewById(R.id.practice_webView);
@@ -65,7 +65,7 @@ public class PracticeActivity extends AppCompatActivity {
         problems = new ArrayList<>();
         RecyclerView.LayoutManager manager = new LinearLayoutManager(PracticeActivity.this);
 
-        rvAnswerReply = (RecyclerView) navigationView.getHeaderView(1).findViewById(R.id.recyclerViewReply);
+        rvAnswerReply = (RecyclerView) navigationView.getHeaderView(0).findViewById(R.id.recyclerViewReply);
         rvAnswerReply.setHasFixedSize(true);
         rvAnswerReply.setLayoutManager(manager);
         rvAnswerReply.setItemAnimator(new DefaultItemAnimator());
@@ -73,7 +73,7 @@ public class PracticeActivity extends AppCompatActivity {
         rvAnswerReply.setAdapter(replyAdapter);
 
         RecyclerView.LayoutManager manager2 = new LinearLayoutManager(PracticeActivity.this);
-        rvAnswer = (RecyclerView) navigationView.getHeaderView(1).findViewById(R.id.recyclerViewAnswer);
+        rvAnswer = (RecyclerView) navigationView.getHeaderView(0).findViewById(R.id.recyclerViewAnswer);
         rvAnswer.setHasFixedSize(true);
         rvAnswer.setLayoutManager(manager2);
         rvAnswer.setItemAnimator(new DefaultItemAnimator());

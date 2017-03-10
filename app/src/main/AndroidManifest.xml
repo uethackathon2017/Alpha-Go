@@ -10,6 +10,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -40,8 +41,12 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".acivities.VideoActivity" />
-        <activity android:name=".acivities.PracticeActivity"></activity>
+        <activity
+            android:name=".acivities.VideoActivity"
+            android:label="Video bài giảng" />
+        <activity
+            android:name=".acivities.PracticeActivity"
+            android:label="Luyện tập" />
     </application>
 
 </manifest>

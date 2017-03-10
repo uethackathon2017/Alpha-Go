@@ -12,6 +12,7 @@
         android:layout_weight="1.5"
         android:gravity="center"
         android:text="Câu 1:"
+        android:textColor="@color/black"
         android:textSize="14sp" />
 
     <RadioGroup
