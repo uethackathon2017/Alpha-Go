@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.quang.tracnghiemtoan.R;
 
@@ -24,7 +26,12 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news, container, false);
+        View v = inflater.inflate(R.layout.fragment_news, container, false);
+        WebView webView = (WebView) v.findViewById(R.id.webView);
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("http://tin.tuyensinh247.com/thi-dai-hoc-va-thi-thpt-quoc-gia-2017-e543.html");
+        return v;
     }
 
 }

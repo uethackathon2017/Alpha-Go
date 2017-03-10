@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import com.quang.tracnghiemtoan.R;
 import com.quang.tracnghiemtoan.fragments.ContestOnlineFragment;
 import com.quang.tracnghiemtoan.fragments.NewsFragment;
-import com.quang.tracnghiemtoan.fragments.PracticeFragment;
 import com.quang.tracnghiemtoan.fragments.SchoolTestFragment;
 import com.quang.tracnghiemtoan.fragments.SolutionFragment;
 import com.quang.tracnghiemtoan.fragments.UploadFragment;
@@ -62,10 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_practice) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.layout_content, new PracticeFragment());
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            startActivity(new Intent(MainActivity.this, PracticeActivity.class));
         } else if (id == R.id.nav_school_test) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new SchoolTestFragment());

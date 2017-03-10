@@ -34,4 +34,14 @@
     <string name="json_youtbe_url">url</string>
     <string name="json_youtube_resourceId">resourceId</string>
     <string name="json_youtube_videoId">videoId</string>
+    <string-array name="list_practice">
+        <item>Bấm Để Chọn Nội Dung</item>
+        <item>Hàm Số</item>
+        <item>Hình Học Không Gian</item>
+        <item>Mặt Tròn Xoay</item>
+        <item>Hàm Mũ Logarit</item>
+        <item>Số Phức</item>
+        <item>Tích Phân</item>
+        <item>Các Phương Pháp Giải Nhanh</item>
+    </string-array>
 </resources>
