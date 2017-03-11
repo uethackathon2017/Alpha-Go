@@ -50,24 +50,24 @@ public class MainFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 switch (position) {
-                    case 0:
+                    case 5:
                         transaction.replace(R.id.layout_content, new NewsFragment());
                         transaction.commit();
                         break;
-                    case 1:
+                    case 0:
                         startActivity(new Intent(getContext(), PracticeActivity.class));
                         break;
-                    case 2:
+                    case 1:
                         startActivity(new Intent(getContext(), TestOnlineActivity.class));
                         break;
-                    case 3:
+                    case 2:
                         transaction.replace(R.id.layout_content, new SchoolTestFragment());
                         transaction.commit();
                         break;
-                    case 4:
+                    case 3:
                         startActivity(new Intent(getContext(), SolutionActivity.class));
                         break;
-                    case 5:
+                    case 4:
                         startActivity(new Intent(getContext(), VideoTutorialActivity.class));
                         break;
                     case 6:

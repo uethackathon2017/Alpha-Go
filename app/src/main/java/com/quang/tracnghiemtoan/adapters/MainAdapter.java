@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quang.tracnghiemtoan.R;
@@ -34,10 +35,26 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.tvMainText.setText(main_text[position]);
         holder.tvTucNgu.setText(main_tuc_ngu_text[position]);
-//        int[] androidColors = v.getResources().getIntArray(R.array.androidcolors);
-//        int randomAndroidColor = androidColors[new Random().nextInt(androidColors.length)];
-//        holder.tvMainText.setBackgroundColor(randomAndroidColor);
-//        holder.tvTucNgu.setBackgroundColor(randomAndroidColor);
+        switch (position) {
+            case 3:
+                holder.linearLayout.setBackgroundResource(R.drawable.bga);
+                break;
+            case 1:
+                holder.linearLayout.setBackgroundResource(R.drawable.bgb);
+                break;
+            case 2:
+                holder.linearLayout.setBackgroundResource(R.drawable.bgc);
+                break;
+            case 6:
+                holder.linearLayout.setBackgroundResource(R.drawable.bgd);
+                break;
+            case 4:
+                holder.linearLayout.setBackgroundResource(R.drawable.bge);
+                break;
+            case 5:
+                holder.linearLayout.setBackgroundResource(R.drawable.bgf);
+                break;
+        }
     }
 
     @Override
@@ -53,11 +70,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tvMainText, tvTucNgu;
+        private LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvMainText = (TextView) itemView.findViewById(R.id.text_main);
             tvTucNgu = (TextView) itemView.findViewById(R.id.tuc_ngu_text);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(this);
         }
 
