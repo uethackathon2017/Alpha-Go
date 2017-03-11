@@ -239,7 +239,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
             builder.create();
             if (!isFinishing()) builder.show();
-
         } else super.onBackPressed();
     }
 
