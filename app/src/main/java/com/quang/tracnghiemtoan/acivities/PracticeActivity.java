@@ -6,6 +6,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,11 +14,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
 
 import com.quang.tracnghiemtoan.R;
+import com.quang.tracnghiemtoan.adapters.PracticeChapterAdapter;
 import com.quang.tracnghiemtoan.adapters.PracticeReplyAdapter;
 import com.quang.tracnghiemtoan.adapters.PracticeRightAnswerAdapter;
 import com.quang.tracnghiemtoan.constants.Constant;
@@ -33,14 +34,19 @@ public class PracticeActivity extends AppCompatActivity {
     private MathJaxWebView mathJaxWebView;
     private SQLiteDataController sqLiteDataController;
     private ArrayList<Problem> problems;
-    private Spinner spnPractice;
     private Toolbar toolbar;
+    private Menu menu;
     private Button btnAnswer;
     private RecyclerView rvAnswerReply;
     private RecyclerView rvAnswer;
     private PracticeReplyAdapter replyAdapter;
     private PracticeRightAnswerAdapter rightAnswerAdapter;
     private DrawerLayout drawer;
+    private LinearLayout practicechoosechapter;
+
+    private String[] main_text = new String[]{"Hàm số", "Hình học không gian", "Mặt tròn xoay", "Hàm mũ logarit", "Số phức", "Tích phân", "Các phương pháp giải nhanh"};
+
+    private boolean checkpracticechoosechapter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,14 @@ public class PracticeActivity extends AppCompatActivity {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_practice);
+
+        practicechoosechapter = (LinearLayout) findViewById(R.id.practice_choose_chapter);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_pratice_chapter);
+        PracticeChapterAdapter chapterAdapter = new PracticeChapterAdapter(main_text);
+        recyclerView.setLayoutManager(new GridLayoutManager(PracticeActivity.this, 1));
+        recyclerView.setAdapter(chapterAdapter);
+
 
         sqLiteDataController = new SQLiteDataController(PracticeActivity.this);
         mathJaxWebView = (MathJaxWebView) findViewById(R.id.practice_webView);
@@ -80,7 +94,7 @@ public class PracticeActivity extends AppCompatActivity {
         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
         rvAnswer.setAdapter(rightAnswerAdapter);
 
-        btnAnswer = (Button)  navigationView.getHeaderView(0).findViewById(R.id.buttonAnswer);
+        btnAnswer = (Button) navigationView.getHeaderView(0).findViewById(R.id.buttonAnswer);
         btnAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,22 +102,15 @@ public class PracticeActivity extends AppCompatActivity {
             }
         });
 
-        spnPractice = (Spinner) findViewById(R.id.list_practice);
-        spnPractice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        chapterAdapter.setOnItemClickListener(new PracticeChapterAdapter.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (String.valueOf(spnPractice.getSelectedItem().toString())) {
-                    case "Bấm Để Chọn Nội Dung":
-//                        problems = sqLiteDataController.getAllProblem(Constant.KIND_PHUONGPHAP);
-//                        replyAdapter = new PracticeReplyAdapter(problems);
-//                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
-//                        rvAnswer.setAdapter(rightAnswerAdapter);
-//                        rvAnswerReply.setAdapter(replyAdapter);
-//                        btnAnswer.setVisibility(View.GONE);
-//                        rvAnswer.setVisibility(View.GONE);
-//                        mathJaxWebView.setText(changeToString(problems));
-                        break;
-                    case "Hàm Số":
+            public void onItemClick(View view, int position) {
+                switch (position) {
+                    case 0:
+                        menu.getItem(0).setVisible(true);
+                        checkpracticechoosechapter = false;
+                        practicechoosechapter.setVisibility(View.GONE);
+                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_HAMSO);
                         replyAdapter = new PracticeReplyAdapter(problems);
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
@@ -112,7 +119,11 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
-                    case "Hình Học Không Gian":
+                    case 1:
+                        menu.getItem(0).setVisible(true);
+                        checkpracticechoosechapter = false;
+                        practicechoosechapter.setVisibility(View.GONE);
+                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_HINHHOCKG);
                         replyAdapter = new PracticeReplyAdapter(problems);
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
@@ -121,7 +132,11 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
-                    case "Mặt Tròn Xoay":
+                    case 2:
+                        menu.getItem(0).setVisible(true);
+                        checkpracticechoosechapter = false;
+                        practicechoosechapter.setVisibility(View.GONE);
+                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_MATTRONXOAY);
                         replyAdapter = new PracticeReplyAdapter(problems);
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
@@ -130,7 +145,11 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
-                    case "Hàm Mũ Logarit":
+                    case 3:
+                        menu.getItem(0).setVisible(true);
+                        checkpracticechoosechapter = false;
+                        practicechoosechapter.setVisibility(View.GONE);
+                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_MULOGARIT);
                         replyAdapter = new PracticeReplyAdapter(problems);
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
@@ -139,7 +158,11 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
-                    case "Số Phức":
+                    case 4:
+                        menu.getItem(0).setVisible(true);
+                        checkpracticechoosechapter = false;
+                        practicechoosechapter.setVisibility(View.GONE);
+                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_SOPHUC);
                         replyAdapter = new PracticeReplyAdapter(problems);
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
@@ -148,7 +171,11 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
-                    case "Tích Phân":
+                    case 5:
+                        menu.getItem(0).setVisible(true);
+                        checkpracticechoosechapter = false;
+                        practicechoosechapter.setVisibility(View.GONE);
+                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_TICHPHAN);
                         replyAdapter = new PracticeReplyAdapter(problems);
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
@@ -157,7 +184,11 @@ public class PracticeActivity extends AppCompatActivity {
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
-                    case "Các Phương Pháp Giải Nhanh":
+                    case 6:
+                        menu.getItem(0).setVisible(true);
+                        checkpracticechoosechapter = false;
+                        practicechoosechapter.setVisibility(View.GONE);
+                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_PHUONGPHAP);
                         replyAdapter = new PracticeReplyAdapter(problems);
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
@@ -168,19 +199,15 @@ public class PracticeActivity extends AppCompatActivity {
                         break;
                 }
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
         });
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = new MenuInflater(PracticeActivity.this);
+        this.menu = menu;
         inflater.inflate(R.menu.practice_menu, menu);
+        menu.getItem(0).setVisible(false);
         return true;
     }
 
@@ -198,5 +225,17 @@ public class PracticeActivity extends AppCompatActivity {
             s = s + "\n" + "<br>" + "Câu " + (i + 1) + ": " + problems.get(i).getQuestion() + "\n" + "<br>";
         }
         return s;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!checkpracticechoosechapter) {
+            checkpracticechoosechapter = true;
+            practicechoosechapter.setVisibility(View.VISIBLE);
+            mathJaxWebView.setVisibility(View.GONE);
+            menu.getItem(0).setVisible(false);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
