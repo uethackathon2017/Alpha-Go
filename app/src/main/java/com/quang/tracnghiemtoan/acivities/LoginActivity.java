@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                                 userInfo.setName(currentProfile.getName());
                                 userInfo.setIdFacebook(currentProfile.getId());
                                 userInfo.setIdFirebase(user.getUid());
-                                userInfo.setPoint(0);
+                                userInfo.setPoint(1);
                                 profileRef.setValue(userInfo);
                             }
                         }

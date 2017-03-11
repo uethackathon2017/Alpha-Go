@@ -18,10 +18,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.quang.tracnghiemtoan.R;
 import com.quang.tracnghiemtoan.adapters.PracticeReplyAdapter;
 import com.quang.tracnghiemtoan.adapters.PracticeRightAnswerAdapter;
@@ -34,16 +42,18 @@ import java.util.ArrayList;
 
 public class GeneralActivity extends AppCompatActivity {
 
-    private ArrayList<ArrayList<Problem>> arrayListExam;
-    private MathJaxWebView mathJaxWebView;
-    private SQLiteDataController sqLiteDataController;
     private ArrayList<String> titleExam = new ArrayList<>();
     private ArrayList<Problem> problems;
     private DrawerLayout drawer;
     private Button btnAnswer;
-    private TextView tvCountTimer;
+    private TextView tvCountTimer, tvName;
     private RecyclerView rvRightAnswer;
     private PracticeReplyAdapter replyAdapter;
+    private FirebaseDatabase database;
+    private DatabaseReference pointRef;
+    private FirebaseUser user;
+    private long currentPoint = 0;
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,19 +66,41 @@ public class GeneralActivity extends AppCompatActivity {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.openDrawer(Gravity.END);
 
+        tvName = (TextView) findViewById(R.id.textViewName);
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_solution);
 
-        mathJaxWebView = (MathJaxWebView) findViewById(R.id.solution_webView);
+        MathJaxWebView mathJaxWebView = (MathJaxWebView) findViewById(R.id.solution_webView);
         mathJaxWebView.getSettings().setJavaScriptEnabled(true);
 
-        sqLiteDataController = new SQLiteDataController(GeneralActivity.this);
+        database = FirebaseDatabase.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        pointRef = database.getReference("Profile/" + user.getUid() + "/point");
+        Toast.makeText(getApplicationContext(), user.getUid(), Toast.LENGTH_LONG).show();
+        pointRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentPoint = dataSnapshot.getValue(Integer.class);
+//                if (currentPoint > 0)
+                Toast.makeText(getApplicationContext(), currentPoint + "", Toast.LENGTH_LONG).show();
+                tvName.setText("Thí sinh " + user.getDisplayName() + ". Điểm tích lũy: " + currentPoint);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        SQLiteDataController sqLiteDataController = new SQLiteDataController(GeneralActivity.this);
         try {
             sqLiteDataController.createDataBase();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        arrayListExam = sqLiteDataController.getAllProblem();
+        ArrayList<ArrayList<Problem>> arrayListExam = sqLiteDataController.getAllProblem();
         for (int i = 0; i < arrayListExam.size(); i++) {
             titleExam.add(arrayListExam.get(i).get(0).getQuestion());
         }
@@ -110,7 +142,6 @@ public class GeneralActivity extends AppCompatActivity {
                         btnAnswer.setEnabled(false);
                         materialDialog.dismiss();
                         String[] strings = replyAdapter.getListAnswer();
-                        int count = 0;
                         for (int i = 0; i < 50; i++) {
                             if (strings[i] != null && strings[i].equals(problems.get(i).getRightAnswer()))
                                 count++;
@@ -119,6 +150,9 @@ public class GeneralActivity extends AppCompatActivity {
                                 .title("Bạn đã trả lời đúng " + count + "/50 câu.")
                                 .positiveText("OK")
                                 .show();
+                        if (currentPoint > 0) {
+                            pointRef.setValue(currentPoint + count);
+                        }
                     }
                 });
             }
@@ -136,7 +170,7 @@ public class GeneralActivity extends AppCompatActivity {
 
     public void showDate() {
         //5400000
-        new CountDownTimer(5400000, 1000) {
+        new CountDownTimer(19000, 1000) {
             public void onTick(long millisUntilFinished) {
                 long hour = (millisUntilFinished / 1000) / 60;
                 long minute = (millisUntilFinished / 1000) % 60;
@@ -152,19 +186,29 @@ public class GeneralActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                tvCountTimer.setText("Hết Giờ");
+                tvCountTimer.setText("Hết giờ!");
+                btnAnswer.setEnabled(false);
+                String[] strings = replyAdapter.getListAnswer();
+                for (int i = 0; i < 50; i++) {
+                    if (strings[i] != null && strings[i].equals(problems.get(i).getRightAnswer()))
+                        count++;
+                }
                 final MaterialDialog dialogwarning = new MaterialDialog.Builder(GeneralActivity.this)
-                        .title("Hết thời gian. Mời bạn xem lại bài làm.")
+                        .title("Hết thời gian. Bạn đã trả lời đúng " + count + "/50 câu.")
                         .positiveText("OK")
                         .contentGravity(GravityEnum.START)
+                        .cancelable(false)
                         .show();
                 final View positiveActionWarning = dialogwarning.getActionButton(DialogAction.POSITIVE);
                 positiveActionWarning.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialogwarning.cancel();
+                        dialogwarning.dismiss();
                         rvRightAnswer.setVisibility(View.VISIBLE);
                         drawer.openDrawer(Gravity.RIGHT);
+                        if (currentPoint > 0) {
+                            pointRef.setValue(currentPoint + count);
+                        }
                     }
                 });
             }

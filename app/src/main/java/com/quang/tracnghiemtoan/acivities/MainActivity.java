@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private android.support.v4.app.FragmentManager fragmentManager;
     private boolean isTest = true;
-    private TextView tvDayLeft;
+    private TextView tvDayLeft, tvPoint;
     private FirebaseUser user;
     private Toolbar toolbar;
     private DrawerLayout drawer;
@@ -105,6 +105,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         long days = diff / (24 * 60 * 60 * 1000);
         tvDayLeft.setText(String.valueOf(days));
+
+        tvPoint = (TextView) findViewById(R.id.textViewPoint);
+        DatabaseReference pointRef = database.getReference("Profile/" + user.getUid() + "/point");
+        pointRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tvPoint.setText("Điểm tích lũy: " + dataSnapshot.getValue(Integer.class) + " điểm");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -252,6 +266,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return null;
         }
         String tag = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
-        return (Fragment) getSupportFragmentManager().findFragmentByTag(tag);
+        return getSupportFragmentManager().findFragmentByTag(tag);
     }
 }
