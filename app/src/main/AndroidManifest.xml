@@ -18,13 +18,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".acivities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".acivities.MainActivity" />
         <activity
             android:name=".acivities.ChatRoomActivity"
             android:label="Phòng Chat"
@@ -55,23 +49,14 @@
             android:name=".acivities.SolutionActivity"
             android:label="Làm đề thi" />
         <activity android:name=".acivities.UploadActivity" />
-        <activity
-            android:name="com.dropbox.client2.android.AuthActivity"
-            android:configChanges="orientation|keyboard"
-            android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        <activity android:name=".acivities.TestOnlineActivity" />
+        <activity android:name=".acivities.SplashActivity">
             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                <!-- Change this to be db- followed by your app key -->
-                <data android:scheme="db-7jtcjtclkf08x9y" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".acivities.TestOnlineActivity"></activity>
     </application>
 
 </manifest>
