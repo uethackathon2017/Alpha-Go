@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,7 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView tvDayLeft;
     private FirebaseUser user;
     private Toolbar toolbar;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -169,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Share to Friends");
-                String s = getResources().getString(R.string.app_introduce) + getPackageName();
                 shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getResources().getString(R.string.app_introduce) + getPackageName());
                 startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.app_name)));
             }
@@ -212,8 +213,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(Gravity.START)) {
+            drawer.closeDrawer(Gravity.START);
+        } else if (!(getActiveFragment() instanceof MainFragment)) {
+            toolbar.setTitle("Trang chủ");
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.layout_content, new MainFragment());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        } else if ((getActiveFragment() instanceof MainFragment)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Bạn có chắc chắn muốn thoát không?");
             builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
@@ -230,12 +239,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
             builder.create();
             if (!isFinishing()) builder.show();
-        }
-        return super.onKeyDown(keyCode, event);
+
+        } else super.onBackPressed();
     }
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+
+    public Fragment getActiveFragment() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            return null;
+        }
+        String tag = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
+        return (Fragment) getSupportFragmentManager().findFragmentByTag(tag);
     }
 }

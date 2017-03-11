@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,21 +39,18 @@ public class GeneralActivity extends AppCompatActivity {
     private SQLiteDataController sqLiteDataController;
     private ArrayList<String> titleExam = new ArrayList<>();
     private ArrayList<Problem> problems;
-    private Toolbar toolbar;
     private DrawerLayout drawer;
     private Button btnAnswer;
     private TextView tvCountTimer;
-    private RecyclerView rvReply;
     private RecyclerView rvRightAnswer;
     private PracticeReplyAdapter replyAdapter;
-    private PracticeRightAnswerAdapter rightAnswerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -79,7 +77,7 @@ public class GeneralActivity extends AppCompatActivity {
         mathJaxWebView.setText(changeToString(problems));
         RecyclerView.LayoutManager manager = new LinearLayoutManager(GeneralActivity.this);
 
-        rvReply = (RecyclerView) navigationView.getHeaderView(0).findViewById(R.id.recyclerViewReply);
+        RecyclerView rvReply = (RecyclerView) navigationView.getHeaderView(0).findViewById(R.id.recyclerViewReply);
         rvReply.setHasFixedSize(true);
         rvReply.setLayoutManager(manager);
         rvReply.setItemAnimator(new DefaultItemAnimator());
@@ -91,7 +89,7 @@ public class GeneralActivity extends AppCompatActivity {
         rvRightAnswer.setHasFixedSize(true);
         rvRightAnswer.setLayoutManager(manager2);
         rvRightAnswer.setItemAnimator(new DefaultItemAnimator());
-        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+        PracticeRightAnswerAdapter rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
         rvRightAnswer.setAdapter(rightAnswerAdapter);
 
         tvCountTimer = (TextView) findViewById(R.id.tv_counttimmer);
@@ -114,7 +112,8 @@ public class GeneralActivity extends AppCompatActivity {
                         String[] strings = replyAdapter.getListAnswer();
                         int count = 0;
                         for (int i = 0; i < 50; i++) {
-                            if (strings[i].equals(problems.get(i).getRightAnswer())) count++;
+                            if (strings[i] != null && strings[i].equals(problems.get(i).getRightAnswer()))
+                                count++;
                         }
                         new MaterialDialog.Builder(GeneralActivity.this)
                                 .title("Bạn đã trả lời đúng " + count + "/50 câu.")
@@ -136,10 +135,20 @@ public class GeneralActivity extends AppCompatActivity {
     }
 
     public void showDate() {
+        //5400000
         new CountDownTimer(5400000, 1000) {
             public void onTick(long millisUntilFinished) {
-                tvCountTimer.setText((millisUntilFinished / 1000) / 60 + ":" + ((millisUntilFinished / 1000) % 60));
-                //here you can have your logic to set text to edittext
+                long hour = (millisUntilFinished / 1000) / 60;
+                long minute = (millisUntilFinished / 1000) % 60;
+                if (hour < 10) {
+                    if (minute < 10)
+                        tvCountTimer.setText("Thời gian còn lại: 0" + hour + " : 0" + minute);
+                    else tvCountTimer.setText("Thời gian còn lại: 0" + hour + " : " + minute);
+                } else {
+                    if (minute < 10)
+                        tvCountTimer.setText("Thời gian còn lại: " + hour + " : 0" + minute);
+                    else tvCountTimer.setText("Thời gian còn lại: " + hour + " : " + minute);
+                }
             }
 
             public void onFinish() {
@@ -154,10 +163,8 @@ public class GeneralActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         dialogwarning.cancel();
-                        tvCountTimer.setVisibility(View.GONE);
-                        btnAnswer.setVisibility(View.VISIBLE);
                         rvRightAnswer.setVisibility(View.VISIBLE);
-                        drawer.openDrawer(Gravity.LEFT);
+                        drawer.openDrawer(Gravity.RIGHT);
                     }
                 });
             }
@@ -197,5 +204,10 @@ public class GeneralActivity extends AppCompatActivity {
             arrayList2.add(arrayList.get(i));
         }
         return arrayList2;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
     }
 }
