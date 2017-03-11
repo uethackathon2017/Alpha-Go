@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     finish();
-                    startActivity(new Intent(LoginActivity.this, ChatRoomActivity.class));
+                    startActivity(new Intent(LoginActivity.this, TestOnlineActivity.class));
                 } else {
                     Toast.makeText(LoginActivity.this, "Vui lòng đăng nhập", Toast.LENGTH_LONG).show();
                 }

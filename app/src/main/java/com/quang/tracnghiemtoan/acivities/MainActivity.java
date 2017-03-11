@@ -49,10 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_chat_room) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         } else if (id == R.id.nav_contest_online) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.layout_content, new ContestOnlineFragment());
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
         } else if (id == R.id.nav_news) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new NewsFragment());
