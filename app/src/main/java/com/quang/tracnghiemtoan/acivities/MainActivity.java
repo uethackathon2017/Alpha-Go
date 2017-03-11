@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.Profile;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private android.support.v4.app.FragmentManager fragmentManager;
     private boolean isTest = true;
     private TextView tvDayLeft;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +75,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
-        ImageView imvAvatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageViewAvatar);
-        String linkAvatar = "https://graph.facebook.com/" + Profile.getCurrentProfile().getId() + "/picture?width=300";
-        Glide.with(MainActivity.this).load(linkAvatar).into(imvAvatar);
-        TextView tvName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textViewName);
-        tvName.setText(Profile.getCurrentProfile().getName());
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            ImageView imvAvatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageViewAvatar);
+            String linkAvatar = "https://graph.facebook.com/" + Profile.getCurrentProfile().getId() + "/picture?width=300";
+            Glide.with(MainActivity.this).load(linkAvatar).into(imvAvatar);
+            TextView tvName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textViewName);
+            tvName.setText(Profile.getCurrentProfile().getName());
+        }
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.layout_content, new MainFragment());
@@ -86,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvDayLeft = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textViewDayLeft);
         Calendar thatDay = Calendar.getInstance();
         thatDay.set(Calendar.DAY_OF_MONTH, 22);
-        thatDay.set(Calendar.MONTH,5); // 0-11 so 1 less
+        thatDay.set(Calendar.MONTH, 5); // 0-11 so 1 less
         thatDay.set(Calendar.YEAR, 2017);
 
         Calendar today = Calendar.getInstance();
@@ -107,11 +113,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.commit();
         } else if (isNetworkConnected()) {
             if (id == R.id.nav_chat_room) {
-                startActivity(new Intent(MainActivity.this, ChatRoomActivity.class));
-            } else if (id == R.id.nav_contest_online) {
-                if (isTest)
-                    startActivity(new Intent(MainActivity.this, TestOnlineActivity.class));
+                if (user != null)
+                    startActivity(new Intent(MainActivity.this, ChatRoomActivity.class));
                 else {
+                    showDialogLogin();
+                }
+            } else if (id == R.id.nav_contest_online) {
+                if (isTest) {
+                    if (user != null)
+                        startActivity(new Intent(MainActivity.this, TestOnlineActivity.class));
+                    else showDialogLogin();
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Đã hết thời gian thi. Vui lòng đợi lần thi sau!");
                     builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
@@ -130,12 +142,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             } else if (id == R.id.nav_practice) {
-                startActivity(new Intent(MainActivity.this, SelectPracticeActivity.class));
+                if (user != null)
+                    startActivity(new Intent(MainActivity.this, SelectPracticeActivity.class));
+                else showDialogLogin();
             } else if (id == R.id.nav_school_test) {
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.layout_content, new SchoolTestFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                if (user != null) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.layout_content, new SchoolTestFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                } else showDialogLogin();
             } else if (id == R.id.nav_video) {
                 startActivity(new Intent(MainActivity.this, VideoTutorialActivity.class));
             } else if (id == R.id.nav_share) {
@@ -161,6 +177,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showDialogLogin() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage("Vui lòng đăng nhập để sử dụng chức năng này!");
+        builder.setCancelable(false);
+        builder.setNegativeButton("Đăng nhập", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
+        builder.setPositiveButton("Quay lại", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create();
+        if (!isFinishing()) builder.show();
     }
 
     @Override
