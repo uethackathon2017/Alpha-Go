@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("setting", Context.MODE_PRIVATE);
-        if (sharedPreferences.getBoolean("intro", false)) {
+        if (!sharedPreferences.getBoolean("intro", false)) {
             startActivity(new Intent(SplashActivity.this, TestMultiplePageActivity.class));
         } else {
             Handler handler = new Handler();

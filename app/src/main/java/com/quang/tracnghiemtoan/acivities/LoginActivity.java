@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -39,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseUser user;
     private Profile currentProfile;
     private DatabaseReference profileRef;
+    private Button btnAnonymous;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,16 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         database = FirebaseDatabase.getInstance();
+
+        btnAnonymous = (Button) findViewById(R.id.buttonAnonymous);
+        btnAnonymous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this, "Hãy đăng nhập facebook để sử dụng tất cả các chức năng của ứng dụng!", Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            }
+        });
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
