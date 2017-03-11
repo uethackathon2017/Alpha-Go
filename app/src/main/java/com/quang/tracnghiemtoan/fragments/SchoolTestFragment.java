@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.quang.tracnghiemtoan.R;
+import com.quang.tracnghiemtoan.acivities.UploadActivity;
 import com.quang.tracnghiemtoan.acivities.ViewSchoolTestActivity;
 import com.quang.tracnghiemtoan.adapters.SchoolTestAdapter;
 import com.quang.tracnghiemtoan.models.SchoolTest;
@@ -38,6 +40,7 @@ public class SchoolTestFragment extends Fragment {
     private ArrayList<SchoolTest> listSchoolTest;
     private View v;
     private ProgressDialog progressDialog;
+    private FloatingActionButton btnUpload;
 
     public SchoolTestFragment() {
         // Required empty public constructor
@@ -64,6 +67,13 @@ public class SchoolTestFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Variables.schoolTest = listSchoolTest.get(position);
                 startActivity(new Intent(v.getContext(), ViewSchoolTestActivity.class));
+            }
+        });
+        btnUpload = (FloatingActionButton) v.findViewById(R.id.button_upload);
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), UploadActivity.class));
             }
         });
         return v;

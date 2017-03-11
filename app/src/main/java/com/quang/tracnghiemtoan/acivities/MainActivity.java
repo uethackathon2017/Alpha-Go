@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.quang.tracnghiemtoan.R;
-import com.quang.tracnghiemtoan.fragments.ContestOnlineFragment;
 import com.quang.tracnghiemtoan.fragments.NewsFragment;
 import com.quang.tracnghiemtoan.fragments.SchoolTestFragment;
 import com.quang.tracnghiemtoan.fragments.UploadFragment;
