@@ -60,7 +60,7 @@ public class GeneralActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.openDrawer(Gravity.START);
+        drawer.openDrawer(Gravity.END);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_solution);
 
@@ -99,12 +99,11 @@ public class GeneralActivity extends AppCompatActivity {
         rvRightAnswer.setAdapter(rightAnswerAdapter);
 
         tvCountTimer = (TextView) findViewById(R.id.tv_counttimmer);
-        btnAnswer = (Button) findViewById(R.id.buttonAnswer);
+        btnAnswer = (Button) navigationView.getHeaderView(0).findViewById(R.id.buttonAnswer);
         btnAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 rvRightAnswer.setVisibility(View.VISIBLE);
-                drawer.openDrawer(Gravity.RIGHT);
             }
         });
 
@@ -124,7 +123,6 @@ public class GeneralActivity extends AppCompatActivity {
                 rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
                 rvRightAnswer.setAdapter(rightAnswerAdapter);
                 rvReply.setAdapter(replyAdapter);
-                rvRightAnswer.setVisibility(View.GONE);
                 showDate();
             }
 
@@ -133,7 +131,6 @@ public class GeneralActivity extends AppCompatActivity {
 
             }
         });
-        btnAnswer.setVisibility(View.GONE);
         showDate();
     }
 

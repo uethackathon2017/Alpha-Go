@@ -1,20 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/ThemeOverlay.AppCompat.Light">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewReply"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/recyclerViewRightAnswer" />
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewRightAnswer"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:background="@color/blue"
-        android:visibility="gone" />
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:theme="@style/ThemeOverlay.AppCompat.Light">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewReply"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/recyclerViewRightAnswer" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewRightAnswer"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/buttonAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:text="Đáp Án"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -9,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -81,12 +80,11 @@ public class PracticeActivity extends AppCompatActivity {
         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
         rvAnswer.setAdapter(rightAnswerAdapter);
 
-        btnAnswer = (Button) findViewById(R.id.button_dapan);
+        btnAnswer = (Button)  navigationView.getHeaderView(0).findViewById(R.id.buttonAnswer);
         btnAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 rvAnswer.setVisibility(View.VISIBLE);
-                drawer.openDrawer(Gravity.RIGHT);
             }
         });
 
@@ -111,7 +109,6 @@ public class PracticeActivity extends AppCompatActivity {
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
                         rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
-                        btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
@@ -121,7 +118,6 @@ public class PracticeActivity extends AppCompatActivity {
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
                         rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
-                        btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
@@ -131,7 +127,6 @@ public class PracticeActivity extends AppCompatActivity {
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
                         rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
-                        btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
@@ -141,7 +136,6 @@ public class PracticeActivity extends AppCompatActivity {
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
                         rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
-                        btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
@@ -151,7 +145,6 @@ public class PracticeActivity extends AppCompatActivity {
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
                         rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
-                        btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
@@ -161,7 +154,6 @@ public class PracticeActivity extends AppCompatActivity {
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
                         rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
-                        btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;
@@ -171,7 +163,6 @@ public class PracticeActivity extends AppCompatActivity {
                         rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
                         rvAnswer.setAdapter(rightAnswerAdapter);
                         rvAnswerReply.setAdapter(replyAdapter);
-                        btnAnswer.setVisibility(View.VISIBLE);
                         rvAnswer.setVisibility(View.GONE);
                         mathJaxWebView.setText(changeToString(problems));
                         break;

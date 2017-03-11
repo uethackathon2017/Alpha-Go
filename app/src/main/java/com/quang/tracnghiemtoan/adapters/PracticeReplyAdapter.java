@@ -35,7 +35,7 @@ public class PracticeReplyAdapter extends RecyclerView.Adapter<PracticeReplyAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.title.setText("Câu " + (position + 1) + ":");
+        holder.title.setText( (position + 1) + ". ");
         holder.answerA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
