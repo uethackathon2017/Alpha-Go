@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 import com.quang.tracnghiemtoan.R;
 
-import java.util.Random;
-
 /**
  * Created by PhungVanQuang on 3/6/2017.
  */
@@ -19,6 +17,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private String[] main_text;
     private String[] main_tuc_ngu_text;
     private View v;
+    private OnItemClickListener mItemClickListener;
 
     public MainAdapter(String[] main_text, String[] main_tuc_ngu_text) {
         this.main_text = main_text;
@@ -35,10 +34,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.tvMainText.setText(main_text[position]);
         holder.tvTucNgu.setText(main_tuc_ngu_text[position]);
-        int[] androidColors = v.getResources().getIntArray(R.array.androidcolors);
-        int randomAndroidColor = androidColors[new Random().nextInt(androidColors.length)];
-        holder.tvMainText.setBackgroundColor(randomAndroidColor);
-        holder.tvTucNgu.setBackgroundColor(randomAndroidColor);
+//        int[] androidColors = v.getResources().getIntArray(R.array.androidcolors);
+//        int randomAndroidColor = androidColors[new Random().nextInt(androidColors.length)];
+//        holder.tvMainText.setBackgroundColor(randomAndroidColor);
+//        holder.tvTucNgu.setBackgroundColor(randomAndroidColor);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         return main_text.length;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tvMainText, tvTucNgu;
 
@@ -59,7 +58,22 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             super(itemView);
             tvMainText = (TextView) itemView.findViewById(R.id.text_main);
             tvTucNgu = (TextView) itemView.findViewById(R.id.tuc_ngu_text);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(v, getAdapterPosition());
+            }
         }
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
+    }
 }

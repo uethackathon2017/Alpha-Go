@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.quang.tracnghiemtoan.R;
+import com.quang.tracnghiemtoan.fragments.MainFragment;
 import com.quang.tracnghiemtoan.fragments.NewsFragment;
 import com.quang.tracnghiemtoan.fragments.SchoolTestFragment;
 
@@ -73,12 +74,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Glide.with(MainActivity.this).load(linkAvatar).into(imvAvatar);
         TextView tvName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textViewName);
         tvName.setText(Profile.getCurrentProfile().getName());
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.layout_content, new MainFragment());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (isNetworkConnected()) {
+        if (id == R.id.nav_home) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.layout_content, new MainFragment());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        } else if (isNetworkConnected()) {
             if (id == R.id.nav_chat_room) {
                 startActivity(new Intent(MainActivity.this, ChatRoomActivity.class));
             } else if (id == R.id.nav_contest_online) {
