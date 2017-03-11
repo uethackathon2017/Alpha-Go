@@ -16,7 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.facebook.Profile;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,6 +68,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+        ImageView imvAvatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageViewAvatar);
+        String linkAvatar = "https://graph.facebook.com/" + Profile.getCurrentProfile().getId() + "/picture?width=300";
+        Glide.with(MainActivity.this).load(linkAvatar).into(imvAvatar);
+        TextView tvName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textViewName);
+        tvName.setText(Profile.getCurrentProfile().getName());
     }
 
     @Override
@@ -71,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (isNetworkConnected()) {
             if (id == R.id.nav_chat_room) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, ChatRoomActivity.class));
             } else if (id == R.id.nav_contest_online) {
                 if (isTest)
                     startActivity(new Intent(MainActivity.this, TestOnlineActivity.class));
@@ -104,6 +113,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, SolutionActivity.class));
             } else if (id == R.id.nav_video) {
                 startActivity(new Intent(MainActivity.this, VideoTutorialActivity.class));
+            } else if (id == R.id.nav_share) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Share to Friends");
+                String s = getResources().getString(R.string.app_introduce) + getPackageName();
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getResources().getString(R.string.app_introduce) + getPackageName());
+                startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.app_name)));
             }
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);

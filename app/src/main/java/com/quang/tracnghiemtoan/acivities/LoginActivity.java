@@ -11,6 +11,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -21,13 +22,23 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.quang.tracnghiemtoan.R;
+import com.quang.tracnghiemtoan.models.UserInfo;
 
 public class LoginActivity extends AppCompatActivity {
 
     private CallbackManager mCallbackManager;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private FirebaseUser user;
+    private Profile currentProfile;
+    private DatabaseReference profileRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +48,35 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
 
+        database = FirebaseDatabase.getInstance();
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     finish();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    currentProfile = Profile.getCurrentProfile();
+                    profileRef = database.getReference("Profile/" + user.getUid());
+                    profileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (!dataSnapshot.exists()) {
+                                UserInfo userInfo = new UserInfo();
+                                userInfo.setName(currentProfile.getName());
+                                userInfo.setIdFacebook(currentProfile.getId());
+                                userInfo.setIdFirebase(user.getUid());
+                                userInfo.setPoint(0);
+                                profileRef.setValue(userInfo);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 } else {
                     Toast.makeText(LoginActivity.this, "Vui lòng đăng nhập!", Toast.LENGTH_LONG).show();
                 }

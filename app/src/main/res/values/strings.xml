@@ -44,4 +44,9 @@
         <item>Tích Phân</item>
         <item>Các Phương Pháp Giải Nhanh</item>
     </string-array>
+
+    <string name="app_introduce" translatable="false">
+        I am using Alpha Go-the smallest Test Math for Android. https://play.google.com/store/apps/details?id=
+    </string>
+
 </resources>
