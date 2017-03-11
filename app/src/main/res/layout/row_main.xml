@@ -9,19 +9,19 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         android:background="@drawable/nav_wall">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="150dp"
             android:background="#85000000"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_main"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="90dp"
                 android:gravity="center"
                 android:text="123"
                 android:textColor="@color/white"
@@ -31,7 +31,7 @@
             <TextView
                 android:id="@+id/tuc_ngu_text"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:text="123"
                 android:textColor="@color/white"

@@ -36,7 +36,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         holder.tvMainText.setText(main_text[position]);
         holder.tvTucNgu.setText(main_tuc_ngu_text[position]);
         switch (position) {
-            case 3:
+            case 0:
                 holder.linearLayout.setBackgroundResource(R.drawable.bga);
                 break;
             case 1:
@@ -45,7 +45,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             case 2:
                 holder.linearLayout.setBackgroundResource(R.drawable.bgc);
                 break;
-            case 6:
+            case 3:
                 holder.linearLayout.setBackgroundResource(R.drawable.bgd);
                 break;
             case 4:

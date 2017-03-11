@@ -2,22 +2,25 @@ package com.quang.tracnghiemtoan.acivities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 
 import com.quang.tracnghiemtoan.R;
-import com.quang.tracnghiemtoan.adapters.PracticeRightAnswerAdapter;
 import com.quang.tracnghiemtoan.adapters.PracticeReplyAdapter;
+import com.quang.tracnghiemtoan.adapters.PracticeRightAnswerAdapter;
 import com.quang.tracnghiemtoan.constants.Constant;
 import com.quang.tracnghiemtoan.controllers.SQLiteDataController;
 import com.quang.tracnghiemtoan.models.Problem;
@@ -38,6 +41,7 @@ public class PracticeActivity extends AppCompatActivity {
     private RecyclerView rvAnswer;
     private PracticeReplyAdapter replyAdapter;
     private PracticeRightAnswerAdapter rightAnswerAdapter;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +50,7 @@ public class PracticeActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_practice);
 
@@ -86,7 +86,7 @@ public class PracticeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 rvAnswer.setVisibility(View.VISIBLE);
-                drawer.openDrawer(Gravity.LEFT);
+                drawer.openDrawer(Gravity.RIGHT);
             }
         });
 
@@ -184,6 +184,21 @@ public class PracticeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(PracticeActivity.this);
+        inflater.inflate(R.menu.practice_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.buttonOnline) {
+            drawer.openDrawer(GravityCompat.END);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public String changeToString(ArrayList<Problem> problems) {

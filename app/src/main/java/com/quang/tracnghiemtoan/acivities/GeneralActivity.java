@@ -3,14 +3,17 @@ package com.quang.tracnghiemtoan.acivities;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,7 +34,7 @@ import com.quang.tracnghiemtoan.views.MathJaxWebView;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SolutionActivity extends AppCompatActivity {
+public class GeneralActivity extends AppCompatActivity {
 
     private ArrayList<ArrayList<Problem>> arrayListExam;
     private MathJaxWebView mathJaxWebView;
@@ -51,24 +54,20 @@ public class SolutionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_the_solution);
+        setContentView(R.layout.activity_general);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.openDrawer(Gravity.START);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_solution);
 
         mathJaxWebView = (MathJaxWebView) findViewById(R.id.solution_webView);
         mathJaxWebView.getSettings().setJavaScriptEnabled(true);
 
-        sqLiteDataController = new SQLiteDataController(SolutionActivity.this);
+        sqLiteDataController = new SQLiteDataController(GeneralActivity.this);
         try {
             sqLiteDataController.createDataBase();
         } catch (IOException e) {
@@ -82,7 +81,7 @@ public class SolutionActivity extends AppCompatActivity {
 
 
         problems = new ArrayList<>();
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(SolutionActivity.this);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(GeneralActivity.this);
 
         rvReply = (RecyclerView) navigationView.getHeaderView(0).findViewById(R.id.recyclerViewReply);
         rvReply.setHasFixedSize(true);
@@ -91,7 +90,7 @@ public class SolutionActivity extends AppCompatActivity {
         replyAdapter = new PracticeReplyAdapter(problems);
         rvReply.setAdapter(replyAdapter);
 
-        RecyclerView.LayoutManager manager2 = new LinearLayoutManager(SolutionActivity.this);
+        RecyclerView.LayoutManager manager2 = new LinearLayoutManager(GeneralActivity.this);
         rvRightAnswer = (RecyclerView) navigationView.getHeaderView(0).findViewById(R.id.recyclerViewRightAnswer);
         rvRightAnswer.setHasFixedSize(true);
         rvRightAnswer.setLayoutManager(manager2);
@@ -105,7 +104,7 @@ public class SolutionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 rvRightAnswer.setVisibility(View.VISIBLE);
-                drawer.openDrawer(Gravity.LEFT);
+                drawer.openDrawer(Gravity.RIGHT);
             }
         });
 
@@ -156,7 +155,7 @@ public class SolutionActivity extends AppCompatActivity {
 
             public void onFinish() {
                 tvCountTimer.setText("Hết Giờ");
-                final MaterialDialog dialogwarning = new MaterialDialog.Builder(SolutionActivity.this)
+                final MaterialDialog dialogwarning = new MaterialDialog.Builder(GeneralActivity.this)
                         .title("Hết thời gian. Mời bạn xem lại bài làm.")
                         .positiveText("OK")
                         .contentGravity(GravityEnum.START)
@@ -174,5 +173,20 @@ public class SolutionActivity extends AppCompatActivity {
                 });
             }
         }.start();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(GeneralActivity.this);
+        inflater.inflate(R.menu.practice_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.buttonOnline) {
+            drawer.openDrawer(GravityCompat.END);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

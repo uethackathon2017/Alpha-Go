@@ -23,10 +23,6 @@
             android:icon="@drawable/exam"
             android:title="Đề thi các trường" />
         <item
-            android:id="@+id/nav_solution"
-            android:icon="@drawable/list"
-            android:title="Bài tập có giải" />
-        <item
             android:id="@+id/nav_video"
             android:icon="@drawable/video"
             android:title="Video hướng dẫn" />

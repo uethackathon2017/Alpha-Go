@@ -45,7 +45,7 @@
             android:name=".acivities.ViewSchoolTestActivity"
             android:label="Đề thi" />
         <activity
-            android:name=".acivities.SolutionActivity"
+            android:name=".acivities.GeneralActivity"
             android:label="Làm đề thi" />
         <activity android:name=".acivities.UploadActivity" />
         <activity android:name=".acivities.TestOnlineActivity" />
@@ -56,6 +56,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".acivities.SelectPracticeActivity"
+            android:theme="@style/SelectPracticeTheme" />
     </application>
 
 </manifest>

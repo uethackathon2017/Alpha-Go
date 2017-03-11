@@ -31,10 +31,13 @@ import com.quang.tracnghiemtoan.fragments.MainFragment;
 import com.quang.tracnghiemtoan.fragments.NewsFragment;
 import com.quang.tracnghiemtoan.fragments.SchoolTestFragment;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private android.support.v4.app.FragmentManager fragmentManager;
     private boolean isTest = true;
+    private TextView tvDayLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.replace(R.id.layout_content, new MainFragment());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
+        tvDayLeft = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textViewDayLeft);
+        Calendar thatDay = Calendar.getInstance();
+        thatDay.set(Calendar.DAY_OF_MONTH, 6);
+        thatDay.set(Calendar.MONTH, 5); // 0-11 so 1 less
+        thatDay.set(Calendar.YEAR, 2017);
+
+        Calendar today = Calendar.getInstance();
+
+        long diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
+
+        long days = diff / (24 * 60 * 60 * 1000);
+        tvDayLeft.setText(String.valueOf(days));
     }
 
     @Override
@@ -114,14 +130,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             } else if (id == R.id.nav_practice) {
-                startActivity(new Intent(MainActivity.this, PracticeActivity.class));
+                startActivity(new Intent(MainActivity.this, SelectPracticeActivity.class));
             } else if (id == R.id.nav_school_test) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.layout_content, new SchoolTestFragment());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-            } else if (id == R.id.nav_solution) {
-                startActivity(new Intent(MainActivity.this, SolutionActivity.class));
             } else if (id == R.id.nav_video) {
                 startActivity(new Intent(MainActivity.this, VideoTutorialActivity.class));
             } else if (id == R.id.nav_share) {
