@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -15,9 +18,8 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.quang.tracnghiemtoan.R;
 import com.quang.tracnghiemtoan.adapters.ImageTestAdapter;
-import com.quang.tracnghiemtoan.adapters.PracticeReplyAdapter;
+import com.quang.tracnghiemtoan.adapters.TestOnlineAnswerAdapter;
 import com.quang.tracnghiemtoan.models.ImageTest;
-import com.quang.tracnghiemtoan.models.Problem;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,8 +32,7 @@ public class TestOnlineActivity extends AppCompatActivity {
     private ImageTestAdapter adapter;
     private LinearLayoutManager layoutManager;
     private RecyclerView rvImageTest, rvAnswer;
-    private PracticeReplyAdapter answerAdapter;
-    private ArrayList<Problem> listProblem;
+    private TestOnlineAnswerAdapter answerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +51,8 @@ public class TestOnlineActivity extends AppCompatActivity {
 
         rvAnswer = (RecyclerView) navigationView.getHeaderView(0).findViewById(R.id.recyclerView);
         rvAnswer.setLayoutManager(new LinearLayoutManager(this));
-        listProblem = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            listProblem.add(new Problem("", "", "", "", ""));
-        }
-        answerAdapter = new PracticeReplyAdapter(listProblem);
+
+        answerAdapter = new TestOnlineAnswerAdapter();
         rvAnswer.setAdapter(answerAdapter);
         answerAdapter.notifyDataSetChanged();
 
@@ -66,6 +64,21 @@ public class TestOnlineActivity extends AppCompatActivity {
         rvImageTest.setAdapter(adapter);
         rvImageTest.setHasFixedSize(true);
         rvImageTest.setItemViewCacheSize(1000);
+
+        Button btnSubmit = (Button) navigationView.getHeaderView(0).findViewById(R.id.buttonSubmit);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String answerTestOnline = "";
+                String[] listAnswer = answerAdapter.getListAnswer();
+                for (int i = 0; i < 50; i++) {
+                    answerTestOnline += (i + 1);
+                    if (listAnswer[i] == null) answerTestOnline += " ";
+                    else answerTestOnline += listAnswer[i];
+                }
+                Toast.makeText(getApplicationContext(), answerTestOnline, Toast.LENGTH_LONG).show();
+            }
+        });
 
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
