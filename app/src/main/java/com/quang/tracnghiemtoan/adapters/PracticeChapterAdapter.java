@@ -51,6 +51,9 @@ public class PracticeChapterAdapter extends RecyclerView.Adapter<PracticeChapter
             case 5:
                 holder.linearLayout.setBackgroundResource(R.drawable.bgf);
                 break;
+            case 6:
+                holder.linearLayout.setBackgroundResource(R.drawable.bga);
+                break;
         }
     }
 

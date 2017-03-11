@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,8 @@ public class MainFragment extends Fragment {
                             break;
                         case 2:
                             if (user != null) {
+                                Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+                                toolbar.setTitle("Tổng hợp đề thi các trường");
                                 transaction.replace(R.id.layout_content, new SchoolTestFragment());
                                 transaction.commit();
                             } else showDialogLogin();
@@ -80,6 +83,8 @@ public class MainFragment extends Fragment {
                             startActivity(new Intent(getContext(), VideoTutorialActivity.class));
                             break;
                         case 4:
+                            Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+                            toolbar.setTitle("Tin tức");
                             transaction.replace(R.id.layout_content, new NewsFragment());
                             transaction.commit();
                             break;

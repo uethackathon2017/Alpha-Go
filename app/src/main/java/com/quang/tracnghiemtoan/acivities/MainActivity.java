@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.quang.tracnghiemtoan.R;
+import com.quang.tracnghiemtoan.adapters.RankFragment;
 import com.quang.tracnghiemtoan.fragments.MainFragment;
 import com.quang.tracnghiemtoan.fragments.NewsFragment;
 import com.quang.tracnghiemtoan.fragments.SchoolTestFragment;
@@ -41,13 +42,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean isTest = true;
     private TextView tvDayLeft;
     private FirebaseUser user;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home) {
+            toolbar.setTitle("Trang chủ");
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new MainFragment());
             fragmentTransaction.addToBackStack(null);
@@ -137,8 +140,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (!isFinishing()) builder.show();
                 }
             } else if (id == R.id.nav_news) {
+                toolbar.setTitle("Tin tức tuyển sinh");
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.layout_content, new NewsFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            } else if (id == R.id.nav_rank) {
+                toolbar.setTitle("Bảng xếp hạng");
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.layout_content, new RankFragment());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             } else if (id == R.id.nav_practice) {
@@ -147,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 else showDialogLogin();
             } else if (id == R.id.nav_school_test) {
                 if (user != null) {
+                    toolbar.setTitle("Tổng hợp đề thi các trường");
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.layout_content, new SchoolTestFragment());
                     fragmentTransaction.addToBackStack(null);

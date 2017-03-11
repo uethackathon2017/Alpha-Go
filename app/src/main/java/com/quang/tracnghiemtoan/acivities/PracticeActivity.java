@@ -44,7 +44,8 @@ public class PracticeActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     private LinearLayout practicechoosechapter;
 
-    private String[] main_text = new String[]{"Hàm số", "Hình học không gian", "Mặt tròn xoay", "Hàm mũ logarit", "Số phức", "Tích phân", "Các phương pháp giải nhanh"};
+    private String[] main_text = new String[]{"Hàm số", "Hình học không gian", "Mặt tròn xoay",
+            "Hàm mũ logarit", "Số phức", "Tích phân", "Các phương pháp giải nhanh", "Hướng dẫn Casio"};
 
     private boolean checkpracticechoosechapter = true;
 
@@ -63,7 +64,7 @@ public class PracticeActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_pratice_chapter);
         PracticeChapterAdapter chapterAdapter = new PracticeChapterAdapter(main_text);
-        recyclerView.setLayoutManager(new GridLayoutManager(PracticeActivity.this, 1));
+        recyclerView.setLayoutManager(new GridLayoutManager(PracticeActivity.this, 2));
         recyclerView.setAdapter(chapterAdapter);
 
 
@@ -107,97 +108,41 @@ public class PracticeActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 switch (position) {
                     case 0:
-                        menu.getItem(0).setVisible(true);
-                        checkpracticechoosechapter = false;
-                        practicechoosechapter.setVisibility(View.GONE);
-                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_HAMSO);
-                        replyAdapter = new PracticeReplyAdapter(problems);
-                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
-                        rvAnswer.setAdapter(rightAnswerAdapter);
-                        rvAnswerReply.setAdapter(replyAdapter);
-                        rvAnswer.setVisibility(View.GONE);
-                        mathJaxWebView.setText(changeToString(problems));
                         break;
                     case 1:
-                        menu.getItem(0).setVisible(true);
-                        checkpracticechoosechapter = false;
-                        practicechoosechapter.setVisibility(View.GONE);
-                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_HINHHOCKG);
-                        replyAdapter = new PracticeReplyAdapter(problems);
-                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
-                        rvAnswer.setAdapter(rightAnswerAdapter);
-                        rvAnswerReply.setAdapter(replyAdapter);
-                        rvAnswer.setVisibility(View.GONE);
-                        mathJaxWebView.setText(changeToString(problems));
                         break;
                     case 2:
-                        menu.getItem(0).setVisible(true);
-                        checkpracticechoosechapter = false;
-                        practicechoosechapter.setVisibility(View.GONE);
-                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_MATTRONXOAY);
-                        replyAdapter = new PracticeReplyAdapter(problems);
-                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
-                        rvAnswer.setAdapter(rightAnswerAdapter);
-                        rvAnswerReply.setAdapter(replyAdapter);
-                        rvAnswer.setVisibility(View.GONE);
-                        mathJaxWebView.setText(changeToString(problems));
                         break;
                     case 3:
-                        menu.getItem(0).setVisible(true);
-                        checkpracticechoosechapter = false;
-                        practicechoosechapter.setVisibility(View.GONE);
-                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_MULOGARIT);
-                        replyAdapter = new PracticeReplyAdapter(problems);
-                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
-                        rvAnswer.setAdapter(rightAnswerAdapter);
-                        rvAnswerReply.setAdapter(replyAdapter);
-                        rvAnswer.setVisibility(View.GONE);
-                        mathJaxWebView.setText(changeToString(problems));
                         break;
                     case 4:
-                        menu.getItem(0).setVisible(true);
-                        checkpracticechoosechapter = false;
-                        practicechoosechapter.setVisibility(View.GONE);
-                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_SOPHUC);
-                        replyAdapter = new PracticeReplyAdapter(problems);
-                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
-                        rvAnswer.setAdapter(rightAnswerAdapter);
-                        rvAnswerReply.setAdapter(replyAdapter);
-                        rvAnswer.setVisibility(View.GONE);
-                        mathJaxWebView.setText(changeToString(problems));
                         break;
                     case 5:
-                        menu.getItem(0).setVisible(true);
-                        checkpracticechoosechapter = false;
-                        practicechoosechapter.setVisibility(View.GONE);
-                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_TICHPHAN);
-                        replyAdapter = new PracticeReplyAdapter(problems);
-                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
-                        rvAnswer.setAdapter(rightAnswerAdapter);
-                        rvAnswerReply.setAdapter(replyAdapter);
-                        rvAnswer.setVisibility(View.GONE);
-                        mathJaxWebView.setText(changeToString(problems));
                         break;
                     case 6:
-                        menu.getItem(0).setVisible(true);
-                        checkpracticechoosechapter = false;
-                        practicechoosechapter.setVisibility(View.GONE);
-                        mathJaxWebView.setVisibility(View.VISIBLE);
                         problems = sqLiteDataController.getAllProblem(Constant.KIND_PHUONGPHAP);
-                        replyAdapter = new PracticeReplyAdapter(problems);
-                        rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
-                        rvAnswer.setAdapter(rightAnswerAdapter);
-                        rvAnswerReply.setAdapter(replyAdapter);
-                        rvAnswer.setVisibility(View.GONE);
-                        mathJaxWebView.setText(changeToString(problems));
+                        break;
+                    case 7:
+                        problems = sqLiteDataController.getAllProblem(Constant.KIND_CASIO);
                         break;
                 }
+                toolbar.setTitle(main_text[position]);
+                menu.getItem(0).setVisible(true);
+                checkpracticechoosechapter = false;
+                practicechoosechapter.setVisibility(View.GONE);
+                mathJaxWebView.setVisibility(View.VISIBLE);
+                rvAnswer.setVisibility(View.GONE);
+                replyAdapter = new PracticeReplyAdapter(problems);
+                rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
+                rvAnswer.setAdapter(rightAnswerAdapter);
+                rvAnswerReply.setAdapter(replyAdapter);
+                mathJaxWebView.setText(changeToString(problems));
             }
         });
     }
@@ -222,7 +167,7 @@ public class PracticeActivity extends AppCompatActivity {
     public String changeToString(ArrayList<Problem> problems) {
         String s = "";
         for (int i = 0; i < problems.size(); i++) {
-            s = s + "\n" + "<br>" + "Câu " + (i + 1) + ": " + problems.get(i).getQuestion() + "\n" + "<br>";
+            s = s + "</br>" + "<u><b>Câu " + (i + 1) + ":</b></u> " + problems.get(i).getQuestion() + "</br>";
         }
         return s;
     }
