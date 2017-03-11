@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(Integer.class) == 0) {
                     isTest = false;
-                }
+                } else isTest = true;
             }
 
             @Override
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             } else if (id == R.id.nav_contest_online) {
                 if (isTest)
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    startActivity(new Intent(MainActivity.this, TestOnlineActivity.class));
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Đã hết thời gian thi. Vui lòng đợi lần thi sau!");
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     });
                     builder.setCancelable(false);
+                    builder.create();
                     if (!isFinishing()) builder.show();
                 }
             } else if (id == R.id.nav_news) {

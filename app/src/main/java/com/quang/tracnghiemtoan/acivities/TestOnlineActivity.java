@@ -124,6 +124,7 @@ public class TestOnlineActivity extends AppCompatActivity {
                             finish();
                         }
                     });
+                    builder.create();
                     builder.setCancelable(false);
                     if (!isFinishing()) builder.show();
                 }
