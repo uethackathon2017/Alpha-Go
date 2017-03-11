@@ -60,6 +60,8 @@
         <activity
             android:name=".acivities.SelectPracticeActivity"
             android:theme="@style/SelectPracticeTheme" />
+        <activity android:name=".acivities.TestMultiplePageActivity"
+            android:theme="@style/NoActionBar"/>
     </application>
 
 </manifest>

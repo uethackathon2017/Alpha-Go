@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         tvDayLeft = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textViewDayLeft);
         Calendar thatDay = Calendar.getInstance();
-        thatDay.set(Calendar.DAY_OF_MONTH, 6);
-        thatDay.set(Calendar.MONTH, 5); // 0-11 so 1 less
+        thatDay.set(Calendar.DAY_OF_MONTH, 22);
+        thatDay.set(Calendar.MONTH,5); // 0-11 so 1 less
         thatDay.set(Calendar.YEAR, 2017);
 
         Calendar today = Calendar.getInstance();
