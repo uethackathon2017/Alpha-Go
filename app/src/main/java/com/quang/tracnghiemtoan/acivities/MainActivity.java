@@ -154,13 +154,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Bạn có chắc chắn muốn thoát không?");
-            builder.setPositiveButton("Đúng", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     finish();
                 }
             });
-            builder.setNegativeButton("Sai", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
