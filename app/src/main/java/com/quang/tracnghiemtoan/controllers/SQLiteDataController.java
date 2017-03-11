@@ -35,11 +35,7 @@ public class SQLiteDataController extends SQLiteOpenHelper {
         boolean dbExist = checkDataBase();
 
         if (dbExist) {
-            //do nothing - database already exist
         } else {
-
-            //By calling this method and empty database will be created into the default system path
-            //of your application so we are gonna be able to overwrite that database with our database.
             this.getReadableDatabase();
 
             try {
@@ -142,6 +138,35 @@ public class SQLiteDataController extends SQLiteOpenHelper {
                 listProblem.add(new Problem(id, question, answer, level, rightAnswer));
             }
             cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return listExam;
+    }
+
+    public ArrayList<ArrayList<Problem>> getAllProblem() {
+        ArrayList<Problem> listProblem;
+        ArrayList<ArrayList<Problem>> listExam = new ArrayList<>();
+        try {
+            openDataBase();
+            String[] columns = new String[]{"iD", "dera", "giai", "dokho", "dapan"};
+            String[] kind = new String[]{Constant.KIND_HAMSO, Constant.KIND_HINHHOCKG, Constant.KIND_MATTRONXOAY, Constant.KIND_MULOGARIT, Constant.KIND_SOPHUC, Constant.KIND_TICHPHAN};
+            for (int i = 0; i < kind.length; i++) {
+                listProblem = new ArrayList<>();
+                Cursor cursor = this.database.query(kind[i], columns, null, null, null, null, null);
+                while (cursor.moveToNext()) {
+                    String id = cursor.getString(0);
+                    String question = cursor.getString(1);
+                    String answer = cursor.getString(2);
+                    String level = cursor.getString(3);
+                    String rightAnswer = cursor.getString(4);
+                    listProblem.add(new Problem(id, question, answer, level, rightAnswer));
+                }
+                listExam.add(listProblem);
+                cursor.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

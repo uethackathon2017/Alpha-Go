@@ -8,6 +8,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:text="Phiếu trả lời trắc nghiệm"
+            android:textColor="@color/black" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -31,9 +41,11 @@
             android:id="@+id/buttonAnswer"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:text="Đáp Án"
-            android:textColor="@color/black"
+            android:background="@drawable/custom_button"
+            android:text="Nộp bài"
+            android:textColor="@color/white"
             android:textSize="12sp" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

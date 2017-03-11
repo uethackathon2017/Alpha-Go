@@ -9,6 +9,7 @@
         android:id="@+id/count_answer"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
         android:layout_weight="0.5"
         android:gravity="center"
         android:text="1. "

@@ -20,42 +20,20 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_counttimmer"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="90:00"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <com.quang.tracnghiemtoan.views.MathJaxWebView
+            android:id="@+id/solution_webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <Spinner
-                    android:id="@+id/list_solution"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toLeftOf="@+id/tv_counttimmer"
-                    android:layout_toStartOf="@+id/tv_counttimmer"
-                    android:popupBackground="@color/white" />
-
-                <TextView
-                    android:id="@+id/tv_counttimmer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:gravity="center"
-                    android:text="90:00"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-            </RelativeLayout>
-
-            <com.quang.tracnghiemtoan.views.MathJaxWebView
-                android:id="@+id/solution_webView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp" />
-        </LinearLayout>
-
+            android:layout_marginTop="10dp" />
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

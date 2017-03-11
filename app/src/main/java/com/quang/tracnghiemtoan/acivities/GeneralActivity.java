@@ -15,10 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -41,7 +38,6 @@ public class GeneralActivity extends AppCompatActivity {
     private SQLiteDataController sqLiteDataController;
     private ArrayList<String> titleExam = new ArrayList<>();
     private ArrayList<Problem> problems;
-    private Spinner spnSolution;
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private Button btnAnswer;
@@ -74,13 +70,13 @@ public class GeneralActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        arrayListExam = sqLiteDataController.getAllExam();
+        arrayListExam = sqLiteDataController.getAllProblem();
         for (int i = 0; i < arrayListExam.size(); i++) {
             titleExam.add(arrayListExam.get(i).get(0).getQuestion());
         }
 
-
-        problems = new ArrayList<>();
+        problems = creatExam(arrayListExam);
+        mathJaxWebView.setText(changeToString(problems));
         RecyclerView.LayoutManager manager = new LinearLayoutManager(GeneralActivity.this);
 
         rvReply = (RecyclerView) navigationView.getHeaderView(0).findViewById(R.id.recyclerViewReply);
@@ -103,32 +99,29 @@ public class GeneralActivity extends AppCompatActivity {
         btnAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rvRightAnswer.setVisibility(View.VISIBLE);
-            }
-        });
-
-
-        spnSolution = (Spinner) findViewById(R.id.list_solution);
-        ArrayAdapter<String> karant_adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item, titleExam);
-        spnSolution.setAdapter(karant_adapter);
-
-        spnSolution.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                mathJaxWebView.setText(changeToString(arrayListExam.get(i)));
-                replyAdapter = new PracticeReplyAdapter(arrayListExam.get(i));
-                problems = arrayListExam.get(i);
-                problems.remove(0);
-                rightAnswerAdapter = new PracticeRightAnswerAdapter(problems);
-                rvRightAnswer.setAdapter(rightAnswerAdapter);
-                rvReply.setAdapter(replyAdapter);
-                showDate();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+                final MaterialDialog materialDialog = new MaterialDialog.Builder(GeneralActivity.this)
+                        .title("Bạn có muốn nộp bài không?")
+                        .positiveText("Có")
+                        .negativeText("Không")
+                        .show();
+                View positiveAction = materialDialog.getActionButton(DialogAction.POSITIVE);
+                positiveAction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        rvRightAnswer.setVisibility(View.VISIBLE);
+                        btnAnswer.setEnabled(false);
+                        materialDialog.dismiss();
+                        String[] strings = replyAdapter.getListAnswer();
+                        int count = 0;
+                        for (int i = 0; i < 50; i++) {
+                            if (strings[i].equals(problems.get(i).getRightAnswer())) count++;
+                        }
+                        new MaterialDialog.Builder(GeneralActivity.this)
+                                .title("Bạn đã trả lời đúng " + count + "/50 câu.")
+                                .positiveText("OK")
+                                .show();
+                    }
+                });
             }
         });
         showDate();
@@ -136,9 +129,8 @@ public class GeneralActivity extends AppCompatActivity {
 
     public String changeToString(ArrayList<Problem> problems) {
         String s = "";
-        s = s + "<br>" + problems.get(0).getQuestion() + "\n" + "<br>";
-        for (int i = 1; i < problems.size(); i++) {
-            s = s + "\n" + "<br>" + "Câu " + i + ": " + problems.get(i).getQuestion() + "\n" + "<br>";
+        for (int i = 0; i < problems.size(); i++) {
+            s = s + "</br>" + "<u><b>Câu " + (i + 1) + ":</b></u> " + problems.get(i).getQuestion() + "</br>";
         }
         return s;
     }
@@ -185,5 +177,25 @@ public class GeneralActivity extends AppCompatActivity {
             drawer.openDrawer(GravityCompat.END);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public ArrayList<Problem> creatExam(ArrayList<ArrayList<Problem>> arrayListExam) {
+        ArrayList<Problem> problemArrayList = new ArrayList<>();
+        problemArrayList = randomExam(arrayListExam.get(0), 11, problemArrayList);
+        problemArrayList = randomExam(arrayListExam.get(1), 8, problemArrayList);
+        problemArrayList = randomExam(arrayListExam.get(2), 8, problemArrayList);
+        problemArrayList = randomExam(arrayListExam.get(3), 10, problemArrayList);
+        problemArrayList = randomExam(arrayListExam.get(4), 6, problemArrayList);
+        problemArrayList = randomExam(arrayListExam.get(5), 7, problemArrayList);
+        java.util.Collections.shuffle(problemArrayList);
+        return problemArrayList;
+    }
+
+    public ArrayList<Problem> randomExam(ArrayList<Problem> arrayList, int count, ArrayList<Problem> arrayList2) {
+        java.util.Collections.shuffle(arrayList);
+        for (int i = 0; i < count; i++) {
+            arrayList2.add(arrayList.get(i));
+        }
+        return arrayList2;
     }
 }

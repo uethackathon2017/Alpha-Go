@@ -21,6 +21,7 @@ public class PracticeReplyAdapter extends RecyclerView.Adapter<PracticeReplyAdap
 
     private ArrayList<Problem> listReplyAnswer;
     private View v;
+    private String[] listAnswer = new String[50];
 
     public PracticeReplyAdapter(ArrayList<Problem> listReplyAnswer) {
         this.listReplyAnswer = listReplyAnswer;
@@ -35,57 +36,29 @@ public class PracticeReplyAdapter extends RecyclerView.Adapter<PracticeReplyAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.title.setText( (position + 1) + ". ");
+        holder.title.setText((position + 1) + ". ");
         holder.answerA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.answerA.getText().equals(listReplyAnswer.get(position).getRightAnswer())) {
-                    holder.answerA.setTextColor(view.getResources().getColor(R.color.red));
-                } else {
-                    holder.answerC.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerB.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerA.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerD.setTextColor(v.getResources().getColor(R.color.black));
-                }
+                listAnswer[position] = "A";
             }
         });
         holder.answerB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.answerB.getText().equals(listReplyAnswer.get(position).getRightAnswer())) {
-                    holder.answerB.setTextColor(v.getResources().getColor(R.color.darkred));
-                } else {
-                    holder.answerC.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerB.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerA.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerD.setTextColor(v.getResources().getColor(R.color.black));
-                }
+                listAnswer[position] = "B";
             }
         });
         holder.answerC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.answerC.getText().equals(listReplyAnswer.get(position).getRightAnswer())) {
-                    holder.answerC.setTextColor(v.getResources().getColor(R.color.darkred));
-                } else {
-                    holder.answerC.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerB.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerA.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerD.setTextColor(v.getResources().getColor(R.color.black));
-                }
+                listAnswer[position] = "C";
             }
         });
         holder.answerD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.answerD.getText().equals(listReplyAnswer.get(position).getRightAnswer())) {
-                    holder.answerD.setTextColor(v.getResources().getColor(R.color.darkred));
-                } else {
-                    holder.answerC.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerB.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerA.setTextColor(v.getResources().getColor(R.color.black));
-                    holder.answerD.setTextColor(v.getResources().getColor(R.color.black));
-                }
+                listAnswer[position] = "D";
             }
         });
     }
@@ -93,6 +66,10 @@ public class PracticeReplyAdapter extends RecyclerView.Adapter<PracticeReplyAdap
     @Override
     public int getItemCount() {
         return listReplyAnswer.size();
+    }
+
+    public String[] getListAnswer() {
+        return listAnswer;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
