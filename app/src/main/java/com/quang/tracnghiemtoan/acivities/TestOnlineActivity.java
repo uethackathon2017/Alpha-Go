@@ -1,7 +1,10 @@
 package com.quang.tracnghiemtoan.acivities;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,12 +18,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.github.barteksc.pdfviewer.PDFView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,22 +32,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.quang.tracnghiemtoan.R;
-import com.quang.tracnghiemtoan.adapters.ImageTestAdapter;
 import com.quang.tracnghiemtoan.adapters.TestOnlineAnswerAdapter;
-import com.quang.tracnghiemtoan.models.ImageTest;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import java.io.File;
+import java.io.InputStream;
 
 public class TestOnlineActivity extends AppCompatActivity {
 
-    private ArrayList<ImageTest> listImageTest;
-    private ImageTestAdapter adapter;
     private TestOnlineAnswerAdapter answerAdapter;
     private DrawerLayout drawer;
+    private PDFView pdfView;
+    private ProgressDialog progressDialog;
+    private FloatingActionButton btnSave, btnShare;
+    private FloatingActionsMenu floatingActionsMenu;
+    private final String LINK_DE_THI = "https://www.dropbox.com/s/woisfn43sjf3vw4/DETHIONLINE.pdf?dl=1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,41 +69,55 @@ public class TestOnlineActivity extends AppCompatActivity {
         rvAnswer.setAdapter(answerAdapter);
         answerAdapter.notifyDataSetChanged();
 
-        listImageTest = new ArrayList<>();
-        adapter = new ImageTestAdapter(listImageTest);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        RecyclerView rvImageTest = (RecyclerView) findViewById(R.id.recyclerViewImageTest);
-        rvImageTest.setLayoutManager(layoutManager);
-        rvImageTest.setAdapter(adapter);
-        rvImageTest.setHasFixedSize(true);
-        rvImageTest.setItemViewCacheSize(1000);
-
-        new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "745323575630461/photos?fields=height,width,link",
-                null,
-                HttpMethod.GET,
-                new GraphRequest.Callback() {
-                    public void onCompleted(GraphResponse response) {
-                        JSONObject root = response.getJSONObject();
-                        try {
-                            JSONArray array = root.getJSONArray("data");
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject object = array.getJSONObject(i);
-                                int height = object.getInt("height");
-                                int width = object.getInt("width");
-                                String link = object.getString("link");
-                                String id = object.getString("id");
-                                ImageTest imageTest = new ImageTest(height, width, link, id);
-                                listImageTest.add(imageTest);
-                                adapter.notifyDataSetChanged();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+        pdfView = (PDFView) findViewById(R.id.pdfView);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Vui lòng đợi...");
+        progressDialog.show();
+        btnSave = (FloatingActionButton) findViewById(R.id.button_Save);
+        btnShare = (FloatingActionButton) findViewById(R.id.button_share);
+        floatingActionsMenu = (FloatingActionsMenu) findViewById(R.id.multiple_actions_down);
+        Ion.with(getApplicationContext())
+                .load(LINK_DE_THI)
+                .asInputStream().setCallback(new FutureCallback<InputStream>() {
+            @Override
+            public void onCompleted(Exception e, InputStream result) {
+                pdfView.fromStream(result).load();
+                progressDialog.dismiss();
+            }
+        });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File fileDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+                if (!fileDir.exists()) {
+                    fileDir.mkdir();
                 }
-        ).executeAsync();
+                final String fileName = URLUtil.guessFileName(LINK_DE_THI, null, null);
+                File file = new File(fileDir, fileName);
+                progressDialog.show();
+                Ion.with(getApplicationContext())
+                        .load(LINK_DE_THI)
+                        .write(file).setCallback(new FutureCallback<File>() {
+                    @Override
+                    public void onCompleted(Exception e, File result) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Lưu thành công " + fileName, Toast.LENGTH_LONG).show();
+                    }
+                });
+                floatingActionsMenu.collapse();
+            }
+        });
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, LINK_DE_THI);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                floatingActionsMenu.collapse();
+            }
+        });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
