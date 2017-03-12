@@ -66,7 +66,7 @@ public class TestOnlineActivity extends AppCompatActivity {
 
         listImageTest = new ArrayList<>();
         adapter = new ImageTestAdapter(listImageTest);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         RecyclerView rvImageTest = (RecyclerView) findViewById(R.id.recyclerViewImageTest);
         rvImageTest.setLayoutManager(layoutManager);
         rvImageTest.setAdapter(adapter);

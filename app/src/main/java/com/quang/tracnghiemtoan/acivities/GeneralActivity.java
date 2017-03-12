@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
@@ -77,7 +76,6 @@ public class GeneralActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         pointRef = database.getReference("Profile/" + user.getUid() + "/point");
-        Toast.makeText(getApplicationContext(), user.getUid(), Toast.LENGTH_LONG).show();
         pointRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -150,7 +148,7 @@ public class GeneralActivity extends AppCompatActivity {
                         }
                         countDownTimer.cancel();
                         new MaterialDialog.Builder(GeneralActivity.this)
-                                .title("Bạn đã trả lời đúng " + count + "/50 câu.")
+                                .title("Bạn đã trả lời đúng " + count + "/50 câu và được cộng " + count + " điểm vào điểm tích lũy")
                                 .positiveText("OK")
                                 .show();
                         if (currentPoint > 0) {
@@ -194,8 +192,7 @@ public class GeneralActivity extends AppCompatActivity {
                     if (strings[i] != null && strings[i].equals(problems.get(i).getRightAnswer()))
                         count++;
                 }
-                final MaterialDialog dialogwarning;
-                dialogwarning = new MaterialDialog.Builder(GeneralActivity.this)
+                final MaterialDialog dialogwarning = new MaterialDialog.Builder(GeneralActivity.this)
                         .title("Hết thời gian. Bạn đã trả lời đúng " + count + "/50 câu và được cộng " + count + " điểm vào điểm tích lũy")
                         .positiveText("OK")
                         .contentGravity(GravityEnum.START)
