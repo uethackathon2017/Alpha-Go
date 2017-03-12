@@ -2,7 +2,7 @@
 # Tác giả: Nhóm Alpha Go
 
 ##Hình ảnh demo:
-<img src="screenshot/one" width="48">
+<img src="screenshot/one.png" width="48">
 
 ##Danh sách các thư viện mã nguồn mở sử dụng trong project:
 
