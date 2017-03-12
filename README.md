@@ -39,11 +39,14 @@ https://github.com/MatthewTamlin/SlidingIntroScreen
 ###10. PinchImageView
 https://github.com/boycy815/PinchImageView
 
+###12. MathJax
+https://github.com/mathjax/MathJax
+
 
 ##Ngoài ra ứng dụng có sử dụng:
 
 
-1. Firebase
+###1. Firebase
 https://firebase.google.com/
-2. Facebook sdk và Facebook API
+###2. Facebook sdk và Facebook API
 https://developers.facebook.com/docs/
