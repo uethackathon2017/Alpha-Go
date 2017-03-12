@@ -2,7 +2,7 @@
 # Tác giả: Nhóm Alpha Go
 
 ##Hình ảnh demo:
-![](screenshot/one.png)
+![](screenshot/one.png =200x)
 
 ##Danh sách các thư viện mã nguồn mở sử dụng trong project:
 
