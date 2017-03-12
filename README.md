@@ -2,8 +2,11 @@
 # Tác giả: Nhóm Alpha Go
 
 ##Hình ảnh demo:
-<img src="screenshot/one.png" width="48">
-
+<img src="screenshot/one.png" width="100">
+<img src="screenshot/two.png" width="100">
+<img src="screenshot/three.png" width="100">
+<img src="screenshot/four.png" width="100">
+<img src="screenshot/five.png" width="100">
 ##Danh sách các thư viện mã nguồn mở sử dụng trong project:
 
 ###1. FloatingActionButton
