@@ -1,4 +1,5 @@
-# Alpha-Go
+# Ứng dụng Trắc nghiệm Toán
+# Tác giả: Nhóm Alpha Go
 
 ##Danh sách các thư viện mã nguồn mở sử dụng trong project:
 
