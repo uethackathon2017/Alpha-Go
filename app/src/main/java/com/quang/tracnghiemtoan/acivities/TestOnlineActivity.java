@@ -22,6 +22,8 @@ import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -57,6 +59,14 @@ public class TestOnlineActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.md_nav_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.openDrawer(Gravity.END);
@@ -161,14 +171,25 @@ public class TestOnlineActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String answerTestOnline = "";
-                String[] listAnswer = answerAdapter.getListAnswer();
-                for (int i = 0; i < 50; i++) {
-                    answerTestOnline += (i + 1);
-                    if (listAnswer[i] == null) answerTestOnline += " ";
-                    else answerTestOnline += listAnswer[i];
-                }
-                mRef.push().setValue(answerTestOnline);
+                final MaterialDialog materialDialog = new MaterialDialog.Builder(TestOnlineActivity.this)
+                        .title("Bạn có muốn nộp bài không? Bạn vẫn có thể làm tiếp nếu chưa hết thời gian. Điểm sẽ được tính lần nộp cuối cùng.")
+                        .positiveText("Có")
+                        .negativeText("Không")
+                        .show();
+                View positiveAction = materialDialog.getActionButton(DialogAction.POSITIVE);
+                positiveAction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String answerTestOnline = "";
+                        String[] listAnswer = answerAdapter.getListAnswer();
+                        for (int i = 0; i < 50; i++) {
+                            answerTestOnline += (i + 1);
+                            if (listAnswer[i] == null) answerTestOnline += " ";
+                            else answerTestOnline += listAnswer[i];
+                        }
+                        mRef.push().setValue(answerTestOnline);
+                    }
+                });
             }
         });
     }

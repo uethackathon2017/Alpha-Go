@@ -1,22 +1,22 @@
-package com.quang.tracnghiemtoan.adapters;
+package com.quang.tracnghiemtoan.fragments;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.quang.tracnghiemtoan.R;
+import com.quang.tracnghiemtoan.adapters.RankAdapter;
 import com.quang.tracnghiemtoan.models.UserInfo;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class RankFragment extends Fragment {
     private RankAdapter adapter;
     private FirebaseDatabase database;
     private DatabaseReference mRef;
-    private FirebaseUser user;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public RankFragment() {
         // Required empty public constructor
@@ -44,8 +44,10 @@ public class RankFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_rank, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeLayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        swipeRefreshLayout.setRefreshing(true);
         listUserInfo = new ArrayList<>();
-        user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
         mRef = database.getReference("Profile");
         mRef.addChildEventListener(new ChildEventListener() {
@@ -63,6 +65,8 @@ public class RankFragment extends Fragment {
                 };
                 Collections.sort(listUserInfo, comparator);
                 adapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setEnabled(false);
             }
 
             @Override
@@ -85,7 +89,6 @@ public class RankFragment extends Fragment {
 
             }
         });
-
         rvRank = (RecyclerView) v.findViewById(R.id.recyclerView);
         adapter = new RankAdapter(listUserInfo);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

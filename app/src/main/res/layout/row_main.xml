@@ -21,8 +21,8 @@
             <TextView
                 android:id="@+id/text_main"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:gravity="center"
+                android:layout_height="80dp"
+                android:gravity="center|bottom"
                 android:text="123"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -31,7 +31,7 @@
             <TextView
                 android:id="@+id/tuc_ngu_text"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:gravity="center"
                 android:text="123"
                 android:textColor="@color/white"

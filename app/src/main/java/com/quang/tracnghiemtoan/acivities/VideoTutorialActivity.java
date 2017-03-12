@@ -3,6 +3,7 @@ package com.quang.tracnghiemtoan.acivities;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,15 +42,28 @@ public class VideoTutorialActivity extends AppCompatActivity implements SearchVi
     private TextView tvTitle, tvDescription;
     private ProgressDialog progressDialog;
     private ArrayList<VideoTutorial> listFilterVideo;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.md_nav_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         findViewById();
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        swipeRefreshLayout.setRefreshing(true);
 
         listVideoTutorial = new ArrayList<>();
 
@@ -70,6 +84,24 @@ public class VideoTutorialActivity extends AppCompatActivity implements SearchVi
                       }
 
         );
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                runOnUiThread(new Runnable() {
+                                  @Override
+                                  public void run() {
+                                      for (int i = 0; i < 10; i++) {
+                                          new getData().execute(Variables.LINK_PLAYLIST + Variables.PAGE_TOKEN[i]);
+                                      }
+
+                                  }
+                              }
+
+                );
+            }
+        });
+        swipeRefreshLayout.setRefreshing(true);
 
         //Click item of recyclerView
         adapter.setOnItemClickListener(new VideoTutorialAdapter.OnItemClickListener() {
@@ -193,6 +225,7 @@ public class VideoTutorialActivity extends AppCompatActivity implements SearchVi
                     listVideoTutorial.add(videoTutorial);
                 }
                 adapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

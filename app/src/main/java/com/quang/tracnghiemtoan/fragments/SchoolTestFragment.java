@@ -1,20 +1,18 @@
 package com.quang.tracnghiemtoan.fragments;
 
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.quang.tracnghiemtoan.R;
-import com.quang.tracnghiemtoan.acivities.UploadActivity;
 import com.quang.tracnghiemtoan.acivities.ViewSchoolTestActivity;
 import com.quang.tracnghiemtoan.adapters.SchoolTestAdapter;
 import com.quang.tracnghiemtoan.models.SchoolTest;
@@ -39,8 +37,7 @@ public class SchoolTestFragment extends Fragment {
     private SchoolTestAdapter adapter;
     private ArrayList<SchoolTest> listSchoolTest;
     private View v;
-    private ProgressDialog progressDialog;
-    private FloatingActionButton btnUpload;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public SchoolTestFragment() {
         // Required empty public constructor
@@ -53,27 +50,35 @@ public class SchoolTestFragment extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_school_test, container, false);
         rvSchoolTest = (RecyclerView) v.findViewById(R.id.recyclerViewSchoolTest);
-        progressDialog = new ProgressDialog(v.getContext());
-        progressDialog.setMessage("Vui lòng đợi...");
-        progressDialog.show();
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeLayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        swipeRefreshLayout.setRefreshing(true);
+        new getData().execute("https://www.dropbox.com/s/p30d5gspenhdvel/data.json?dl=1");
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listSchoolTest.clear();
+                adapter.notifyDataSetChanged();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(true);
+                        new getData().execute("https://www.dropbox.com/s/p30d5gspenhdvel/data.json?dl=1");
+                    }
+                });
+            }
+        });
         listSchoolTest = new ArrayList<>();
         adapter = new SchoolTestAdapter(listSchoolTest);
         LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext());
         rvSchoolTest.setLayoutManager(layoutManager);
         rvSchoolTest.setAdapter(adapter);
-        new getData().execute("https://www.dropbox.com/s/p30d5gspenhdvel/data.json?dl=1");
+
         adapter.setOnItemClickListener(new SchoolTestAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Variables.schoolTest = listSchoolTest.get(position);
                 startActivity(new Intent(v.getContext(), ViewSchoolTestActivity.class));
-            }
-        });
-        btnUpload = (FloatingActionButton) v.findViewById(R.id.button_upload);
-        btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), UploadActivity.class));
             }
         });
         return v;
@@ -120,7 +125,7 @@ public class SchoolTestFragment extends Fragment {
                     listSchoolTest.add(new SchoolTest(title, linkTest, dateTest, linkImage));
                 }
                 adapter.notifyDataSetChanged();
-                progressDialog.dismiss();
+                swipeRefreshLayout.setRefreshing(false);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

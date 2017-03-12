@@ -69,7 +69,21 @@ public class MainFragment extends Fragment {
                             break;
                         case 1:
                             if (user != null)
-                                startActivity(new Intent(getContext(), TestOnlineActivity.class));
+                                if (MainActivity.isTest)
+                                    startActivity(new Intent(getContext(), TestOnlineActivity.class));
+                                else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    builder.setMessage("Đã hết thời gian thi. Vui lòng đợi lần thi sau!");
+                                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    builder.setCancelable(false);
+                                    builder.create();
+                                    if (!getActivity().isFinishing()) builder.show();
+                                }
                             else showDialogLogin();
                             break;
                         case 2:

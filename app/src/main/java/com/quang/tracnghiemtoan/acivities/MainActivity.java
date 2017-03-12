@@ -30,7 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.quang.tracnghiemtoan.R;
-import com.quang.tracnghiemtoan.adapters.RankFragment;
+import com.quang.tracnghiemtoan.fragments.RankFragment;
 import com.quang.tracnghiemtoan.fragments.MainFragment;
 import com.quang.tracnghiemtoan.fragments.NewsFragment;
 import com.quang.tracnghiemtoan.fragments.SchoolTestFragment;
@@ -40,13 +40,13 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private android.support.v4.app.FragmentManager fragmentManager;
-    private boolean isTest = true;
+    public static Boolean isTest = false;
     private TextView tvDayLeft, tvPoint;
     private FirebaseUser user;
     private Toolbar toolbar;
     private DrawerLayout drawer;
 
-    public  static Boolean checkmainfragment = true;
+    public static Boolean checkmainfragment = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (!isFinishing()) builder.show();
                 }
             } else if (id == R.id.nav_news) {
+                MainActivity.checkmainfragment = false;
                 toolbar.setTitle("Tin tức tuyển sinh");
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.layout_content, new NewsFragment());
@@ -177,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 else showDialogLogin();
             } else if (id == R.id.nav_school_test) {
                 if (user != null) {
+                    MainActivity.checkmainfragment = false;
                     toolbar.setTitle("Tổng hợp đề thi các trường");
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.layout_content, new SchoolTestFragment());
@@ -235,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(Gravity.START)) {
             drawer.closeDrawer(Gravity.START);
         } else if (!checkmainfragment) {
-            checkmainfragment =true;
+            checkmainfragment = true;
             toolbar.setTitle("Trang chủ");
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new MainFragment());

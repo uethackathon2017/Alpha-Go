@@ -48,7 +48,6 @@
         <activity
             android:name=".acivities.GeneralActivity"
             android:label="Làm đề thi" />
-        <activity android:name=".acivities.UploadActivity" />
         <activity android:name=".acivities.TestOnlineActivity" android:label="Thi Online" />
         <activity android:name=".acivities.SplashActivity">
             <intent-filter>

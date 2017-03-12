@@ -35,91 +35,97 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public abstract class ThreePageTestBase extends IntroActivity {
-	/**
-	 * Used during testing to identify this class.
-	 */
-	private static final String TAG = "[ThreePageTestBase]";
+    /**
+     * Used during testing to identify this class.
+     */
+    private static final String TAG = "[ThreePageTestBase]";
 
-	/**
-	 * Colors to use for the desired backgrounds.
-	 */
-	private static final int[] colors = {0xff4185f4, 0xffed1c24,0xff22b14c ,0xffff7f27};
+    /**
+     * Colors to use for the desired backgrounds.
+     */
+    private static final int[] colors = {0xff4185f4, 0xffed1c24, 0xff22b14c, 0xffff7f27, 0xff0000a0};
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		getLeftButtonAccessor().setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Log.d(TAG, "[on click] [left button]");
-			}
-		});
+        getLeftButtonAccessor().setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "[on click] [left button]");
+            }
+        });
 
-		getRightButtonAccessor().setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Log.d(TAG, "[on click] [right button]");
-			}
-		});
+        getRightButtonAccessor().setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "[on click] [right button]");
+            }
+        });
 
-		getFinalButtonAccessor().setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Log.d(TAG, "[on click] [final button]");
-			}
-		});
+        getFinalButtonAccessor().setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "[on click] [final button]");
+            }
+        });
 
-		setBackgroundManager(new ColorBlender(colors));
+        setBackgroundManager(new ColorBlender(colors));
 
-	}
+    }
 
-	@Override
-	protected Collection<Fragment> generatePages(Bundle savedInstanceState) {
-		ArrayList<Fragment> pages = new ArrayList<>();
+    @Override
+    protected Collection<Fragment> generatePages(Bundle savedInstanceState) {
+        ArrayList<Fragment> pages = new ArrayList<>();
 
-		final int screenWidth = ScreenSizeHelper.getScreenWidthPx(this);
-		final int screenHeight = ScreenSizeHelper.getScreenHeightPx(this);
+        final int screenWidth = ScreenSizeHelper.getScreenWidthPx(this);
+        final int screenHeight = ScreenSizeHelper.getScreenHeightPx(this);
 
-		final Bitmap lines1 = BitmapEfficiencyHelper.decodeResource(this, R.drawable.one,
-				screenWidth, screenHeight);
-		final Bitmap lines2 = BitmapEfficiencyHelper.decodeResource(this, R.drawable.two,
-				screenWidth, screenHeight);
-		final Bitmap lines3 = BitmapEfficiencyHelper.decodeResource(this, R.drawable.three,
-				screenWidth, screenHeight);
-		final Bitmap lines4 = BitmapEfficiencyHelper.decodeResource(this, R.drawable.four,
-				screenWidth, screenHeight);
+        final Bitmap lines1 = BitmapEfficiencyHelper.decodeResource(this, R.drawable.one,
+                screenWidth, screenHeight);
+        final Bitmap lines2 = BitmapEfficiencyHelper.decodeResource(this, R.drawable.two,
+                screenWidth, screenHeight);
+        final Bitmap lines3 = BitmapEfficiencyHelper.decodeResource(this, R.drawable.three,
+                screenWidth, screenHeight);
+        final Bitmap lines4 = BitmapEfficiencyHelper.decodeResource(this, R.drawable.four,
+                screenWidth, screenHeight);
+        final Bitmap lines5 = BitmapEfficiencyHelper.decodeResource(this, R.drawable.five,
+                screenWidth, screenHeight);
 
-		for (int i = 0; i < colors.length; i++) {
-			final ParallaxPage newPage = ParallaxPage.newInstance();
-			switch (i){
-				case 0:
-					newPage.setFrontImage(lines1);
-					newPage.setBackImage(lines1);
-					break;
-				case 1:
-					newPage.setFrontImage(lines2);
-					newPage.setBackImage(lines2);
-					break;
-				case 2:
-					newPage.setFrontImage(lines3);
-					newPage.setBackImage(lines3);
-					break;
-				case 3:
-					newPage.setFrontImage(lines4);
-					newPage.setBackImage(lines4);
-					break;
-			}
-			pages.add(newPage);
-		}
-		return pages;
-	}
+        for (int i = 0; i < colors.length; i++) {
+            final ParallaxPage newPage = ParallaxPage.newInstance();
+            switch (i) {
+                case 0:
+                    newPage.setFrontImage(lines1);
+                    newPage.setBackImage(lines1);
+                    break;
+                case 1:
+                    newPage.setFrontImage(lines2);
+                    newPage.setBackImage(lines2);
+                    break;
+                case 2:
+                    newPage.setFrontImage(lines3);
+                    newPage.setBackImage(lines3);
+                    break;
+                case 3:
+                    newPage.setFrontImage(lines4);
+                    newPage.setBackImage(lines4);
+                    break;
+                case 4:
+                    newPage.setFrontImage(lines5);
+                    newPage.setBackImage(lines5);
+                    break;
+            }
+            pages.add(newPage);
+        }
+        return pages;
+    }
 
-	/**
-	 * @return the colors used in this activity
-	 */
-	@Override
-	protected IntroButton.Behaviour generateFinalButtonBehaviour() {
-		return new IntroButton.DoNothing();
-	}
+    /**
+     * @return the colors used in this activity
+     */
+    @Override
+    protected IntroButton.Behaviour generateFinalButtonBehaviour() {
+        return new IntroButton.DoNothing();
+    }
 }

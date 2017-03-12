@@ -1,6 +1,6 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.quang.tracnghiemtoan.fragments.SchoolTestFragment">
@@ -10,28 +10,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/multiple_actions_down"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        fab:fab_addButtonColorNormal="#E91E63"
-        fab:fab_addButtonPlusIconColor="#ffffff"
-        fab:fab_addButtonSize="mini"
-        fab:fab_expandDirection="up"
-        fab:fab_labelStyle="@style/menu_labels_style">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="#F44336"
-            fab:fab_icon="@drawable/ic_upload"
-            fab:fab_title="Upload" />
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
-</FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

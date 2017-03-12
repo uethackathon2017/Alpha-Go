@@ -1,5 +1,6 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.quang.tracnghiemtoan.fragments.NewsFragment">
@@ -8,5 +9,6 @@
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+</android.support.v4.widget.SwipeRefreshLayout>
 
-</FrameLayout>
+
