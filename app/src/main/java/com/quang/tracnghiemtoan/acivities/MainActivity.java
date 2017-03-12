@@ -7,7 +7,6 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -30,9 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.quang.tracnghiemtoan.R;
-import com.quang.tracnghiemtoan.fragments.RankFragment;
 import com.quang.tracnghiemtoan.fragments.MainFragment;
 import com.quang.tracnghiemtoan.fragments.NewsFragment;
+import com.quang.tracnghiemtoan.fragments.RankFragment;
 import com.quang.tracnghiemtoan.fragments.SchoolTestFragment;
 
 import java.util.Calendar;
@@ -88,6 +87,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Glide.with(MainActivity.this).load(linkAvatar).into(imvAvatar);
             TextView tvName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textViewName);
             tvName.setText(Profile.getCurrentProfile().getName());
+            tvPoint = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textViewPoint);
+            DatabaseReference pointRef = database.getReference("Profile/" + user.getUid() + "/point");
+            pointRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue() != null)
+                        tvPoint.setText("Điểm tích lũy: " + dataSnapshot.getValue() + " điểm");
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -108,20 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         long days = diff / (24 * 60 * 60 * 1000);
         tvDayLeft.setText(String.valueOf(days));
 
-        tvPoint = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textViewPoint);
-        DatabaseReference pointRef = database.getReference("Profile/" + user.getUid() + "/point");
-        pointRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null)
-                    tvPoint.setText("Điểm tích lũy: " + dataSnapshot.getValue() + " điểm");
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override
@@ -266,13 +266,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
-    }
-
-    public Fragment getActiveFragment() {
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            return null;
-        }
-        String tag = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
-        return getSupportFragmentManager().findFragmentByTag(tag);
     }
 }

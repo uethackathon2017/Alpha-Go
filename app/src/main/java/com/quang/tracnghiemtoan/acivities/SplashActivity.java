@@ -18,6 +18,7 @@ public class SplashActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("setting", Context.MODE_PRIVATE);
         if (!sharedPreferences.getBoolean("intro", false)) {
+            finish();
             startActivity(new Intent(SplashActivity.this, TestMultiplePageActivity.class));
         } else {
             Handler handler = new Handler();
