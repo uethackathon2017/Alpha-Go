@@ -9,7 +9,7 @@
 <img src="screenshot/five.png" width="150">
 
 ##File apk demo
-<a href="demo/app-release.apk"> Tải ngay </>
+<a href="demo/app-release.apk"> Tải ngay
 
 ##Danh sách các thư viện mã nguồn mở sử dụng trong project:
 
