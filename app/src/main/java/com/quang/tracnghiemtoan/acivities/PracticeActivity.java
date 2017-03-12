@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -174,7 +175,9 @@ public class PracticeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (!checkpracticechoosechapter) {
+        if (drawer.isDrawerOpen(Gravity.END)) {
+            drawer.closeDrawer(Gravity.END);
+        } else if (!checkpracticechoosechapter) {
             checkpracticechoosechapter = true;
             practicechoosechapter.setVisibility(View.VISIBLE);
             mathJaxWebView.setVisibility(View.GONE);

@@ -8,6 +8,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Phiếu trả lời trắc nghiệm"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -16,8 +26,11 @@
         <Button
             android:id="@+id/buttonSubmit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_gravity="center"
-            android:text="Nộp bài" />
+            android:background="@drawable/custom_button"
+            android:text="Nộp bài"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

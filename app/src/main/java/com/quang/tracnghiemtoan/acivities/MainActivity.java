@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private DrawerLayout drawer;
 
+    public  static Boolean checkmainfragment = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,12 +108,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         long days = diff / (24 * 60 * 60 * 1000);
         tvDayLeft.setText(String.valueOf(days));
 
-        tvPoint = (TextView) findViewById(R.id.textViewPoint);
+        tvPoint = (TextView) navigationView.getHeaderView(0).findViewById(R.id.textViewPoint);
         DatabaseReference pointRef = database.getReference("Profile/" + user.getUid() + "/point");
         pointRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                tvPoint.setText("Điểm tích lũy: " + dataSnapshot.getValue(Integer.class) + " điểm");
+                if (dataSnapshot.getValue() != null)
+                    tvPoint.setText("Điểm tích lũy: " + dataSnapshot.getValue() + " điểm");
             }
 
             @Override
@@ -162,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             } else if (id == R.id.nav_rank) {
+                MainActivity.checkmainfragment = false;
                 toolbar.setTitle("Bảng xếp hạng");
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.layout_content, new RankFragment());
@@ -230,13 +234,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (drawer.isDrawerOpen(Gravity.START)) {
             drawer.closeDrawer(Gravity.START);
-        } else if (!(getActiveFragment() instanceof MainFragment)) {
+        } else if (!checkmainfragment) {
+            checkmainfragment =true;
             toolbar.setTitle("Trang chủ");
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.layout_content, new MainFragment());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-        } else if ((getActiveFragment() instanceof MainFragment)) {
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Bạn có chắc chắn muốn thoát không?");
             builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
@@ -253,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
             builder.create();
             if (!isFinishing()) builder.show();
-        } else super.onBackPressed();
+        }
     }
 
     private boolean isNetworkConnected() {

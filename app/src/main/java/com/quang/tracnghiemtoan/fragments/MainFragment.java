@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.quang.tracnghiemtoan.R;
 import com.quang.tracnghiemtoan.acivities.ChatRoomActivity;
 import com.quang.tracnghiemtoan.acivities.LoginActivity;
+import com.quang.tracnghiemtoan.acivities.MainActivity;
 import com.quang.tracnghiemtoan.acivities.SelectPracticeActivity;
 import com.quang.tracnghiemtoan.acivities.TestOnlineActivity;
 import com.quang.tracnghiemtoan.acivities.VideoTutorialActivity;
@@ -73,6 +74,7 @@ public class MainFragment extends Fragment {
                             break;
                         case 2:
                             if (user != null) {
+                                MainActivity.checkmainfragment = false;
                                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
                                 toolbar.setTitle("Tổng hợp đề thi các trường");
                                 transaction.replace(R.id.layout_content, new SchoolTestFragment());
@@ -83,6 +85,7 @@ public class MainFragment extends Fragment {
                             startActivity(new Intent(getContext(), VideoTutorialActivity.class));
                             break;
                         case 4:
+                            MainActivity.checkmainfragment = false;
                             Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
                             toolbar.setTitle("Tin tức");
                             transaction.replace(R.id.layout_content, new NewsFragment());

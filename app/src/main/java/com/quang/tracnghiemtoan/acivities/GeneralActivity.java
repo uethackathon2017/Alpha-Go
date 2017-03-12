@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -54,6 +53,7 @@ public class GeneralActivity extends AppCompatActivity {
     private FirebaseUser user;
     private long currentPoint = 0;
     private int count = 0;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +81,10 @@ public class GeneralActivity extends AppCompatActivity {
         pointRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                currentPoint = dataSnapshot.getValue(Integer.class);
-//                if (currentPoint > 0)
-                Toast.makeText(getApplicationContext(), currentPoint + "", Toast.LENGTH_LONG).show();
-                tvName.setText("Thí sinh " + user.getDisplayName() + ". Điểm tích lũy: " + currentPoint);
+                if (dataSnapshot.getValue(Integer.class) != null) {
+                    currentPoint = dataSnapshot.getValue(Integer.class);
+                    tvName.setText("Thí sinh " + user.getDisplayName() + ". Điểm tích lũy: " + currentPoint);
+                }
             }
 
             @Override
@@ -125,6 +125,8 @@ public class GeneralActivity extends AppCompatActivity {
         rvRightAnswer.setAdapter(rightAnswerAdapter);
 
         tvCountTimer = (TextView) findViewById(R.id.tv_counttimmer);
+        countDownTimer = showDate();
+        countDownTimer.start();
         btnAnswer = (Button) navigationView.getHeaderView(0).findViewById(R.id.buttonAnswer);
         btnAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +148,7 @@ public class GeneralActivity extends AppCompatActivity {
                             if (strings[i] != null && strings[i].equals(problems.get(i).getRightAnswer()))
                                 count++;
                         }
+                        countDownTimer.cancel();
                         new MaterialDialog.Builder(GeneralActivity.this)
                                 .title("Bạn đã trả lời đúng " + count + "/50 câu.")
                                 .positiveText("OK")
@@ -157,7 +160,6 @@ public class GeneralActivity extends AppCompatActivity {
                 });
             }
         });
-        showDate();
     }
 
     public String changeToString(ArrayList<Problem> problems) {
@@ -168,9 +170,8 @@ public class GeneralActivity extends AppCompatActivity {
         return s;
     }
 
-    public void showDate() {
-        //5400000
-        new CountDownTimer(19000, 1000) {
+    public CountDownTimer showDate() {
+        CountDownTimer countDownTimer = new CountDownTimer(5400000, 1000) {
             public void onTick(long millisUntilFinished) {
                 long hour = (millisUntilFinished / 1000) / 60;
                 long minute = (millisUntilFinished / 1000) % 60;
@@ -193,8 +194,9 @@ public class GeneralActivity extends AppCompatActivity {
                     if (strings[i] != null && strings[i].equals(problems.get(i).getRightAnswer()))
                         count++;
                 }
-                final MaterialDialog dialogwarning = new MaterialDialog.Builder(GeneralActivity.this)
-                        .title("Hết thời gian. Bạn đã trả lời đúng " + count + "/50 câu.")
+                final MaterialDialog dialogwarning;
+                dialogwarning = new MaterialDialog.Builder(GeneralActivity.this)
+                        .title("Hết thời gian. Bạn đã trả lời đúng " + count + "/50 câu và được cộng " + count + " điểm vào điểm tích lũy")
                         .positiveText("OK")
                         .contentGravity(GravityEnum.START)
                         .cancelable(false)
@@ -212,7 +214,8 @@ public class GeneralActivity extends AppCompatActivity {
                     }
                 });
             }
-        }.start();
+        };
+        return countDownTimer;
     }
 
     @Override
@@ -228,6 +231,12 @@ public class GeneralActivity extends AppCompatActivity {
             drawer.openDrawer(GravityCompat.END);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        countDownTimer.cancel();
     }
 
     public ArrayList<Problem> creatExam(ArrayList<ArrayList<Problem>> arrayListExam) {
@@ -251,7 +260,9 @@ public class GeneralActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return super.onKeyDown(keyCode, event);
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(Gravity.END)) {
+            drawer.closeDrawer(Gravity.END);
+        } else super.onBackPressed();
     }
 }

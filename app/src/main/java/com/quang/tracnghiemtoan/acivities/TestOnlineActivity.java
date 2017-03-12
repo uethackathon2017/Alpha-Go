@@ -3,13 +3,17 @@ package com.quang.tracnghiemtoan.acivities;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -39,6 +43,7 @@ public class TestOnlineActivity extends AppCompatActivity {
     private ArrayList<ImageTest> listImageTest;
     private ImageTestAdapter adapter;
     private TestOnlineAnswerAdapter answerAdapter;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +53,8 @@ public class TestOnlineActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.openDrawer(Gravity.END);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_test_online);
 
         RecyclerView rvAnswer = (RecyclerView) navigationView.getHeaderView(0).findViewById(R.id.recyclerView);
@@ -150,5 +152,27 @@ public class TestOnlineActivity extends AppCompatActivity {
                 mRef.push().setValue(answerTestOnline);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(TestOnlineActivity.this);
+        inflater.inflate(R.menu.practice_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.buttonOnline) {
+            drawer.openDrawer(GravityCompat.END);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(Gravity.END)) {
+            drawer.closeDrawer(Gravity.END);
+        } else super.onBackPressed();
     }
 }
