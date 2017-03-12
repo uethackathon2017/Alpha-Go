@@ -1,7 +1,7 @@
 # Ứng dụng Trắc nghiệm Toán
 # Tác giả: Nhóm Alpha Go:
-Đặng Ngọc Quảng - ĐH Bách Khoa Hà Nội
-Phùng Văn Quang - ĐH Bách Khoa Hà Nội
+<b>Đặng Ngọc Quảng</b> - ĐH Bách Khoa Hà Nội</br>
+<b>Phùng Văn Quang</b> - ĐH Bách Khoa Hà Nội
 
 ##Hình ảnh demo:
 <img src="screenshot/one.png" width="150">
